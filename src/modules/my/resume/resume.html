@@ -3,49 +3,37 @@
 
         <!-- TOP CONFIG PANEL starts -->
         <lightning-layout-item size="12" class="slds-no-print">
-            <div class="slds-page-header slds-page-header_record-home">
-                <div class="slds-page-header__row">
-                    <div class="slds-page-header__col-title">
-                        <div class="slds-media">
-                            <div class="slds-media__figure">
-                                <lightning-icon icon-name="standard:settings" title="settings"></lightning-icon>
-                            </div>
-                            <div class="slds-media__body">
-                                <div class="slds-page-header__name">
-                                    <div class="slds-page-header__name-title">
-                                        <h1>
-                                            <span class="slds-page-header__title">Resume Configuration
-                                                Panel</span>
-                                        </h1>
-                                    </div>
-                                </div>
-                                <p class="slds-wrap">Welcome to Your Resume Builder. Edit the JSON
-                                    data to personalize this Resume as per your needs and you can print the content too.
-                                </p>
-                            </div>
-                        </div>
+            <lightning-layout multiple-rows class="slds-page-header slds-page-header_record-home">
+                <lightning-layout-item size="12" large-device-size="6" medium-device-size="6" small-device-size="12">
+                    <div class="slds-text-heading_medium">
+                        <span>
+                            <lightning-icon icon-name="standard:settings" title="settings"></lightning-icon>
+                        </span>
+                        <span class="slds-p-horizontal_x-small">Resume Configuration
+                            Panel</span>
                     </div>
-                    <div class="slds-page-header__col-actions">
-                        <div class="slds-page-header__controls">
-                            <div class="slds-page-header__control">
-                                <lightning-button label="Edit" onclick={showModal} class="slds-m-left_x-small">
-                                </lightning-button>
-                                <lightning-button label="Print" onclick={handlePrint} class="slds-m-left_x-small">
-                                </lightning-button>
-                                <!-- <lightning-button label="Switch template" onclick={handleTemplateSwitch} class="slds-m-left_x-small"></lightning-button>
-                                <lightning-button-icon icon-name="utility:image" variant="border-filled"
-                                    alternative-text="Toggle Display Picture" title="Toggle Display Picture"
-                                    onclick={togglePicture} class="slds-m-left_x-small"></lightning-button-icon>
-                                <lightning-button-icon icon-name="utility:light_bulb" variant="brand"
-                                    alternative-text="Toggle Dark Mode" title="Toggle Dark Mode"
-                                    onclick={toggleDarkMode} class="slds-m-left_x-small"></lightning-button-icon> -->
-                            </div>
-                        </div>
+                </lightning-layout-item>
+                <lightning-layout-item size="12" large-device-size="6" medium-device-size="6" small-device-size="12"
+                    class="slds-text-align_right">
+                    <lightning-button label="Edit" onclick={showModal} class="slds-m-left_x-small">
+                    </lightning-button>
+                    <lightning-button label="Print" onclick={handlePrint} class="slds-m-left_x-small">
+                    </lightning-button>
+                    <!-- <lightning-button label="Switch template" onclick={handleTemplateSwitch}
+                        class="slds-m-left_x-small"></lightning-button> -->
+                    <!-- <lightning-button-icon icon-name="utility:image" variant="border-filled"
+                        alternative-text="Toggle Display Picture" title="Toggle Display Picture" onclick={togglePicture}
+                        class="slds-m-left_x-small"></lightning-button-icon> -->
+                    <!-- <lightning-button-icon icon-name="utility:light_bulb" variant="brand"
+                        alternative-text="Toggle Dark Mode" title="Toggle Dark Mode" onclick={toggleDarkMode}
+                        class="slds-m-left_x-small"></lightning-button-icon> -->
+                </lightning-layout-item>
+                <lightning-layout-item size="12">
+                    <div class="slds-wrap slds-p-top_small">Welcome to Your Resume Builder. Edit the JSON
+                        data to personalize this Resume as per your needs and you can print the content too.
                     </div>
-                </div>
-
-            </div>
-
+                </lightning-layout-item>
+            </lightning-layout>
         </lightning-layout-item>
         <!-- TOP CONFIG PANEL ends -->
 
@@ -383,7 +371,8 @@
                                                             <template if:true={project.keywords.length}>
                                                                 <template for:each={project.keywords}
                                                                     for:item="keyword">
-                                                                    <lightning-badge key={keyword} label={keyword}>
+                                                                    <lightning-badge class="slds-m-bottom_xx-small"
+                                                                        key={keyword} label={keyword}>
                                                                     </lightning-badge>
                                                                 </template>
                                                             </template>
@@ -616,8 +605,9 @@
                                                                     <template if:true={vol.highlights.length}>
                                                                         <template for:each={vol.highlights}
                                                                             for:item="highlight">
-                                                                            <lightning-badge key={highlight}
-                                                                                label={highlight}>
+                                                                            <lightning-badge
+                                                                                class="slds-m-bottom_xx-small"
+                                                                                key={highlight} label={highlight}>
                                                                             </lightning-badge>
                                                                         </template>
                                                                     </template>
@@ -729,8 +719,9 @@
                                                                         <span class="slds-p-horizontal_small">
                                                                             <template for:each={interest.keywords}
                                                                                 for:item="keyword">
-                                                                                <lightning-badge key={keyword}
-                                                                                    label={keyword}>
+                                                                                <lightning-badge
+                                                                                    class="slds-m-bottom_xx-small"
+                                                                                    key={keyword} label={keyword}>
                                                                                 </lightning-badge>
                                                                             </template>
                                                                         </span>
@@ -786,7 +777,8 @@
                 <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
                     <div>Edit the Below JSON Values for your personalization</div>
                     <div class="slds-text-title_bold">Do not modify the Keys in this JSON. If you
-                        do not need a particular section / content, either remove it or make its value = "" or []</div>
+                        do not need a particular section / content, either remove it or make its value = "" or [] , as
+                        appropriate in below JSON format</div>
 
                     <template if:true={error}>
                         <div class="slds-text-color_destructive">{error}</div>
