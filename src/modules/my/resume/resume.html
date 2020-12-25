@@ -28,15 +28,15 @@
                     <div class="slds-page-header__col-actions">
                         <div class="slds-page-header__controls">
                             <div class="slds-page-header__control">
-                                <lightning-button label="Edit" onclick={showModal}></lightning-button>
-                                <!-- <lightning-button label="Switch template" onclick={handleTemplateSwitch}></lightning-button> -->
-                                <lightning-button label="Print" onclick={handlePrint}></lightning-button>
+                                <lightning-button label="Edit" onclick={showModal} class="slds-m-left_x-small"></lightning-button>
+                                <lightning-button label="Print" onclick={handlePrint} class="slds-m-left_x-small"></lightning-button>
+                                <!-- <lightning-button label="Switch template" onclick={handleTemplateSwitch} class="slds-m-left_x-small"></lightning-button>
                                 <lightning-button-icon icon-name="utility:image" variant="border-filled"
                                     alternative-text="Toggle Display Picture" title="Toggle Display Picture"
-                                    onclick={togglePicture}></lightning-button-icon>
-                                <!-- <lightning-button-icon icon-name="utility:light_bulb" variant="brand"
+                                    onclick={togglePicture} class="slds-m-left_x-small"></lightning-button-icon>
+                                <lightning-button-icon icon-name="utility:light_bulb" variant="brand"
                                     alternative-text="Toggle Dark Mode" title="Toggle Dark Mode"
-                                    onclick={toggleDarkMode}></lightning-button-icon> -->
+                                    onclick={toggleDarkMode} class="slds-m-left_x-small"></lightning-button-icon> -->
                             </div>
                         </div>
                     </div>
@@ -70,12 +70,12 @@
                             <template if:true={resume.basics}>
 
                                 <!-- Conditional Display of User Image -->
-                                <template if:true={boolShowPicture}>
+                                <!-- <template if:true={boolShowPicture}>
                                     <template if:true={resume.basics.picture}>
                                         <img class="slds-align_absolute-center" src={resume.basics.picture}
                                             alt="Display Picture" height="100px" width="100px"></img>
                                     </template>
-                                </template>
+                                </template> -->
 
                                 <!-- Details -->
                                 <div class="slds-text-heading_medium slds-align_absolute-center slds-p-top_x-small">

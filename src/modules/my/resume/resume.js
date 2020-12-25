@@ -13,10 +13,10 @@ const baseJSONResume = {
         summary:
             '18x Certified Salesforce Professional with extensive consulting experience as a Salesforce Solution Designer with a knack for designing, developing and delivering quality solutions on Salesforce Platform. 6+ Years of Work Experience. The go-to person to define and refine architecture. The go-to builder for most pressing Salesforce implementation projects. Capable to flawlessly communicate with technical and non-technical Client stakeholders. Proficient in App development, passionate Trainer and Mentor, and a certified Application & System Architect going onward and upward!',
         location: {
-            street: '2712 Broadway St',
-            city: 'San Francisco',
+            street: '10880 Malibu Point',
+            city: 'Los Angeles',
             state: 'California',
-            postalCode: 'CA 94115',
+            postalCode: '90265',
             country: 'US'
         },
         profiles: [
