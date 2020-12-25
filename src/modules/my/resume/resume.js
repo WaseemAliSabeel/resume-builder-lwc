@@ -98,7 +98,7 @@ const baseJSONResume = {
             startDate: '2016-05-01',
             endDate: '2017-05-01',
             summary:
-                'Summary about the client work or Project Description here ... Build a Managed Package for multiple Life Science Industry clients and successfully published on AppExchange.',
+                'Summary about the client work or Project Description here ... Built a Managed Package for multiple Life Science Industry clients and successfully published on AppExchange.',
             keywords: [
                 'Requirements gathering',
                 'Deployments',
