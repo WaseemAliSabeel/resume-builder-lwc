@@ -243,7 +243,7 @@ const baseJSONResume = {
             website: 'https://salesforce.com/',
             startDate: '2016-01-01',
             endDate: '2016-05-01',
-            summary: 'Description of Volunteering activities ...',
+            summary: 'Description of Volunteering activities',
             highlights: ["Awarded 'Volunteer of the Month'"]
         },
         {
@@ -252,7 +252,7 @@ const baseJSONResume = {
             website: 'https://salesforce.com/',
             startDate: '2017-11-01',
             endDate: '2017-12-01',
-            summary: 'Description of Volunteering activities ...',
+            summary: 'Description of Volunteering activities',
             highlights: []
         }
     ],
@@ -298,8 +298,8 @@ export default class Resume extends LightningElement {
     COMMA_SPACE = ', ';
     QUOTATION = '"';
 
-    get boolisResumeEmpty(){
-        return this.resume && this.resume.basics ? false:true;
+    get boolisResumeEmpty() {
+        return this.resume && this.resume.basics ? false : true;
     }
     /***** To Print the Resume without the slds-no-print Sections *****/
     handlePrint() {

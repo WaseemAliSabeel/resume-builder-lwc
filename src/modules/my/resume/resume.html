@@ -28,8 +28,10 @@
                     <div class="slds-page-header__col-actions">
                         <div class="slds-page-header__controls">
                             <div class="slds-page-header__control">
-                                <lightning-button label="Edit" onclick={showModal} class="slds-m-left_x-small"></lightning-button>
-                                <lightning-button label="Print" onclick={handlePrint} class="slds-m-left_x-small"></lightning-button>
+                                <lightning-button label="Edit" onclick={showModal} class="slds-m-left_x-small">
+                                </lightning-button>
+                                <lightning-button label="Print" onclick={handlePrint} class="slds-m-left_x-small">
+                                </lightning-button>
                                 <!-- <lightning-button label="Switch template" onclick={handleTemplateSwitch} class="slds-m-left_x-small"></lightning-button>
                                 <lightning-button-icon icon-name="utility:image" variant="border-filled"
                                     alternative-text="Toggle Display Picture" title="Toggle Display Picture"
@@ -283,12 +285,15 @@
                                                                                 class="slds-text-color_weak slds-text-align_right">
                                                                                 <span>
                                                                                     <lightning-formatted-date-time
-                                                                                        value={work.value.startDate}>
+                                                                                        value={work.value.startDate}
+                                                                                        year="numeric" month="short">
                                                                                     </lightning-formatted-date-time>
                                                                                 </span> - <template
                                                                                     if:true={work.value.endDate}><span>
                                                                                         <lightning-formatted-date-time
-                                                                                            value={work.value.endDate}>
+                                                                                            value={work.value.endDate}
+                                                                                            year="numeric"
+                                                                                            month="short">
                                                                                         </lightning-formatted-date-time>
                                                                                     </span></template><template
                                                                                     if:false={work.value.endDate}><span>Current</span></template>
@@ -360,11 +365,13 @@
                                                                 <div class="slds-text-color_weak slds-text-align_right">
                                                                     <span>
                                                                         <lightning-formatted-date-time
-                                                                            value={project.startDate}>
+                                                                            value={project.startDate} year="numeric"
+                                                                            month="short">
                                                                         </lightning-formatted-date-time>
                                                                     </span> - <template if:true={project.endDate}><span>
                                                                             <lightning-formatted-date-time
-                                                                                value={project.endDate}>
+                                                                                value={project.endDate} year="numeric"
+                                                                                month="short">
                                                                             </lightning-formatted-date-time>
                                                                         </span></template><template
                                                                         if:false={project.endDate}><span>Current</span></template>
@@ -407,14 +414,15 @@
                                                             </span>
                                                             <template if:true={skill.keywords}>
                                                                 <template if:true={skill.keywords.length}>
-                                                                    <span class="slds-p-horizontal_small">
+                                                                    <div class="slds-p-horizontal_small">
                                                                         <template for:each={skill.keywords}
                                                                             for:item="keyword">
-                                                                            <lightning-badge key={keyword}
-                                                                                label={keyword}>
+                                                                            <lightning-badge
+                                                                                class="slds-m-bottom_xx-small"
+                                                                                key={keyword} label={keyword}>
                                                                             </lightning-badge>
                                                                         </template>
-                                                                    </span>
+                                                                    </div>
                                                                 </template>
                                                             </template>
                                                         </div>
@@ -538,7 +546,7 @@
                                                 title="Publications & Presentations">
                                                 <lightning-layout multiple-rows class="slds-p-vertical_x-small">
                                                     <template for:each={resume.publications} for:item="pub">
-                                                        <lightning-layout-item key={pub.name} size="4"
+                                                        <lightning-layout-item key={pub.name} size="8"
                                                             large-device-size="4" medium-device-size="4"
                                                             small-device-size="8" class="slds-p-horizontal_medium">
 
@@ -556,13 +564,14 @@
                                                             </div>
                                                             <div>{pub.summary}</div>
                                                         </lightning-layout-item>
-                                                        <lightning-layout-item key={pub.name} size="2"
+                                                        <lightning-layout-item key={pub.name} size="4"
                                                             large-device-size="2" medium-device-size="2"
                                                             small-device-size="4" class="slds-p-horizontal_medium">
                                                             <div class="slds-text-color_weak slds-text-align_right">
                                                                 <template if:true={pub.releaseDate}>
                                                                     <lightning-formatted-date-time
-                                                                        value={pub.releaseDate}>
+                                                                        value={pub.releaseDate} year="numeric"
+                                                                        month="short">
                                                                     </lightning-formatted-date-time>
                                                                 </template>
                                                             </div>
@@ -584,7 +593,7 @@
                                                 <lightning-layout multiple-rows class="slds-p-vertical_x-small">
                                                     <template for:each={resume.volunteer} for:item="vol">
 
-                                                        <lightning-layout-item key={vol.organization} size="3"
+                                                        <lightning-layout-item key={vol.organization} size="6"
                                                             large-device-size="3" medium-device-size="3"
                                                             small-device-size="6" class="slds-p-horizontal_medium">
                                                             <div class="slds-text-title_bold">{vol.position}
@@ -615,17 +624,18 @@
                                                                 </template>
                                                             </div>
                                                         </lightning-layout-item>
-                                                        <lightning-layout-item key={vol.organization} size="3"
+                                                        <lightning-layout-item key={vol.organization} size="6"
                                                             large-device-size="3" medium-device-size="3"
                                                             small-device-size="6" class="slds-p-horizontal_medium">
                                                             <div class="slds-text-color_weak slds-text-align_right">
                                                                 <span>
-                                                                    <lightning-formatted-date-time
-                                                                        value={vol.startDate}>
+                                                                    <lightning-formatted-date-time value={vol.startDate}
+                                                                        year="numeric" month="short">
                                                                     </lightning-formatted-date-time>
                                                                 </span> - <template if:true={vol.endDate}><span>
                                                                         <lightning-formatted-date-time
-                                                                            value={vol.endDate}>
+                                                                            value={vol.endDate} year="numeric"
+                                                                            month="short">
                                                                         </lightning-formatted-date-time>
                                                                     </span></template><template
                                                                     if:false={vol.endDate}><span>Current</span></template>
@@ -647,7 +657,7 @@
                                             <lightning-card icon-name="custom:custom48" title="Awards">
                                                 <lightning-layout multiple-rows class="slds-p-vertical_x-small">
                                                     <template for:each={resume.awards} for:item="award">
-                                                        <lightning-layout-item key={award.title} size="4"
+                                                        <lightning-layout-item key={award.title} size="8"
                                                             large-device-size="4" medium-device-size="4"
                                                             small-device-size="8" class="slds-p-horizontal_medium">
                                                             <div class="slds-text-title_bold">{award.title}
@@ -657,12 +667,13 @@
                                                             </div>
                                                             <div>{award.summary}</div>
                                                         </lightning-layout-item>
-                                                        <lightning-layout-item key={award.title} size="2"
+                                                        <lightning-layout-item key={award.title} size="4"
                                                             large-device-size="2" medium-device-size="2"
                                                             small-device-size="4" class="slds-p-horizontal_medium">
                                                             <div class="slds-text-color_weak slds-text-align_right">
                                                                 <template if:true={award.date}>
-                                                                    <lightning-formatted-date-time value={award.date}>
+                                                                    <lightning-formatted-date-time value={award.date}
+                                                                        year="numeric" month="short">
                                                                     </lightning-formatted-date-time>
                                                                 </template>
                                                             </div>
@@ -680,7 +691,7 @@
                                 <template if:true={resume.languages}>
                                     <template if:true={resume.languages.length}>
 
-                                        <lightning-layout-item size="6" large-device-size="6" medium-device-size="6"
+                                        <lightning-layout-item size="12" large-device-size="6" medium-device-size="6"
                                             small-device-size="12" padding="horizontal-small">
                                             <lightning-card icon-name="standard:feedback" title="Languages">
                                                 <ol class="slds-list_dotted slds-p-horizontal_small">
@@ -704,7 +715,7 @@
                                 <template if:true={resume.interests}>
                                     <template if:true={resume.interests.length}>
 
-                                        <lightning-layout-item size="6" large-device-size="6" medium-device-size="6"
+                                        <lightning-layout-item size="12" large-device-size="6" medium-device-size="6"
                                             small-device-size="12" padding="horizontal-small">
                                             <lightning-card icon-name="standard:brand" title="Interests">
                                                 <ol class="slds-list_dotted slds-p-horizontal_small">
