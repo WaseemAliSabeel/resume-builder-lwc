@@ -4,7 +4,7 @@
         <!-- TOP CONFIG PANEL starts -->
         <lightning-layout-item size="12" class="slds-no-print">
             <lightning-layout multiple-rows class="slds-page-header slds-page-header_record-home">
-                <lightning-layout-item size="12" large-device-size="6" medium-device-size="6" small-device-size="12">
+                <lightning-layout-item size="12" large-device-size="8" medium-device-size="8" small-device-size="12">
                     <div class="slds-text-heading_medium">
                         <span>
                             <lightning-icon icon-name="standard:settings" title="settings"></lightning-icon>
@@ -12,8 +12,11 @@
                         <span class="slds-p-horizontal_x-small">Resume Configuration
                             Panel</span>
                     </div>
+                    <div class="slds-p-vertical_small">Welcome to Your Resume Builder. Edit the JSON
+                        data to personalize this Resume as per your needs and you can print the content too.
+                    </div>
                 </lightning-layout-item>
-                <lightning-layout-item size="12" large-device-size="6" medium-device-size="6" small-device-size="12"
+                <lightning-layout-item size="12" large-device-size="4" medium-device-size="4" small-device-size="12"
                     class="slds-text-align_right">
                     <lightning-button label="Edit" onclick={showModal} class="slds-m-left_x-small">
                     </lightning-button>
@@ -29,11 +32,6 @@
                     <!-- <lightning-button-icon icon-name="utility:image" variant="border-filled"
                         alternative-text="Toggle Display Picture" title="Toggle Display Picture" onclick={togglePicture}
                         class="slds-m-left_x-small"></lightning-button-icon> -->
-                </lightning-layout-item>
-                <lightning-layout-item size="12">
-                    <div class="slds-wrap slds-p-top_small">Welcome to Your Resume Builder. Edit the JSON
-                        data to personalize this Resume as per your needs and you can print the content too.
-                    </div>
                 </lightning-layout-item>
             </lightning-layout>
         </lightning-layout-item>
