@@ -5,8 +5,8 @@ const baseJSONResume = {
     basics: {
         name: 'Waseem Ali Sabeel',
         label: 'Salesforce Specialist',
-        picture:
-            'https://pbs.twimg.com/profile_images/1274019341281816577/BnF3KnNG_400x400.jpg',
+        picture: '/resources/WaseemAliSabeel.png',
+        pictureComment: 'The file path is for the picture stored in Github only. Third party URLs will be blocked',
         email: 'wsabeel@gmail.com',
         phone: '(123) 456-7890',
         website: 'https://sfwiseguys.wordpress.com',
@@ -291,7 +291,7 @@ const baseJSONResume = {
 
 export default class Resume extends LightningElement {
     @track boolShowModal = false;
-    @track boolShowPicture = true;
+    @track boolShowPicture = false;
     @track resume = baseJSONResume;
     @track strResume = JSON.stringify(this.resume, null, 4);
     @track error;

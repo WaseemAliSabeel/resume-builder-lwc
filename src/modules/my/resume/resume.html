@@ -22,16 +22,14 @@
                     </lightning-button>
                     <lightning-button label="Print" onclick={handlePrint} class="slds-m-left_x-small">
                     </lightning-button>
+                    <lightning-button-icon icon-name="utility:image" variant="border-filled"
+                        alternative-text="Toggle Display Picture" title="Toggle Display Picture" onclick={togglePicture}
+                        class="slds-m-left_x-small"></lightning-button-icon>
                     <lightning-button-icon icon-name="utility:light_bulb" variant="brand"
                         alternative-text="Toggle Dark Mode" title="Toggle Dark Mode" onclick={toggleMode}
                         class="slds-m-left_x-small"></lightning-button-icon>
                     <!-- <lightning-button label="Switch template" onclick={handleTemplateSwitch}
                         class="slds-m-left_x-small"></lightning-button> -->
-
-                    <!-- NOT USING BECAUSE any * IMAGE SOURCE DENIED BY Content Security Policy. Safety over unsafe features. :) -->
-                    <!-- <lightning-button-icon icon-name="utility:image" variant="border-filled"
-                        alternative-text="Toggle Display Picture" title="Toggle Display Picture" onclick={togglePicture}
-                        class="slds-m-left_x-small"></lightning-button-icon> -->
                 </lightning-layout-item>
             </lightning-layout>
         </lightning-layout-item>
@@ -60,14 +58,13 @@
                                 small-device-size="12" class="slds-hyphenate">
                                 <template if:true={resume.basics}>
 
-                                    <!-- NOT USING BECAUSE any * IMAGE SOURCE DENIED BY Content Security Policy. Safety over unsafe features. :) -->
-                                    <!--  Conditional Display of User Image -->
-                                    <!-- <template if:true={boolShowPicture}>
+                                     <!-- Conditional Display of User Image -->
+                                    <template if:true={boolShowPicture}>
                                         <template if:true={resume.basics.picture}>
                                             <img class="slds-align_absolute-center" src={resume.basics.picture}
                                                 alt="Display Picture" height="100px" width="100px"></img>
                                         </template>
-                                    </template> -->
+                                    </template>
 
                                     <!-- Details -->
                                     <div class="slds-text-heading_medium slds-align_absolute-center slds-p-top_x-small">
