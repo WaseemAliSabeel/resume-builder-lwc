@@ -19,13 +19,15 @@
                     </lightning-button>
                     <lightning-button label="Print" onclick={handlePrint} class="slds-m-left_x-small">
                     </lightning-button>
+                    <lightning-button-icon icon-name="utility:light_bulb" variant="brand"
+                        alternative-text="Toggle Dark Mode" title="Toggle Dark Mode" onclick={toggleMode}
+                        class="slds-m-left_x-small"></lightning-button-icon>
                     <!-- <lightning-button label="Switch template" onclick={handleTemplateSwitch}
                         class="slds-m-left_x-small"></lightning-button> -->
+
+                    <!-- NOT USING BECAUSE any * IMAGE SOURCE DENIED BY Content Security Policy. Safety over unsafe features. :) -->
                     <!-- <lightning-button-icon icon-name="utility:image" variant="border-filled"
                         alternative-text="Toggle Display Picture" title="Toggle Display Picture" onclick={togglePicture}
-                        class="slds-m-left_x-small"></lightning-button-icon> -->
-                    <!-- <lightning-button-icon icon-name="utility:light_bulb" variant="brand"
-                        alternative-text="Toggle Dark Mode" title="Toggle Dark Mode" onclick={toggleDarkMode}
                         class="slds-m-left_x-small"></lightning-button-icon> -->
                 </lightning-layout-item>
                 <lightning-layout-item size="12">
@@ -39,718 +41,975 @@
 
         <!-- Resume Container starts -->
         <lightning-layout-item size="12">
-            <lightning-card class="slds-m-top_small">
-                <template if:true={resume}>
-                    <lightning-layout multiple-rows>
+            <article class="slds-card slds-p-top_x-small slds-text-color_inverse lgc-bg-inverse">
+                <div class="slds-card__body slds-card__body_inner">
+                    <template if:true={resume}>
+                        <lightning-layout multiple-rows class="slds-text-color_inverse lgc-bg-inverse">
 
-                        <!-- Error panel for Blank / Incorrect Resume starts-->
-                        <template if:true={boolisResumeEmpty}>
-                            <lightning-layout-item size="12" flexibility="auto" padding="around-medium">
-                                <div class="slds-text-heading_small slds-box slds-theme_error">
-                                    <p class="slds-text-align_center">Uh oh! Bad JSON data found. Kindly Reset and
-                                        then personalize the content accordingly</p>
-                                </div>
-                            </lightning-layout-item>
-                        </template>
-                        <!-- Error panel for Blank / Incorrect Resume ends-->
-
-                        <!-- Left Panel Starts -->
-                        <lightning-layout-item size="12" large-device-size="3" medium-device-size="4"
-                            small-device-size="12" class="slds-hyphenate">
-                            <template if:true={resume.basics}>
-
-                                <!-- Conditional Display of User Image -->
-                                <!-- <template if:true={boolShowPicture}>
-                                    <template if:true={resume.basics.picture}>
-                                        <img class="slds-align_absolute-center" src={resume.basics.picture}
-                                            alt="Display Picture" height="100px" width="100px"></img>
-                                    </template>
-                                </template> -->
-
-                                <!-- Details -->
-                                <div class="slds-text-heading_medium slds-align_absolute-center slds-p-top_x-small">
-                                    {resume.basics.name}</div>
-                                <template if:true={resume.basics.label}>
-                                    <div class="slds-text-heading_small slds-align_absolute-center">
-                                        {resume.basics.label}
+                            <!-- Error panel for Blank / Incorrect Resume starts-->
+                            <template if:true={boolisResumeEmpty}>
+                                <lightning-layout-item size="12" flexibility="auto" padding="around-medium">
+                                    <div class="slds-text-heading_small slds-box slds-theme_error">
+                                        <p class="slds-text-align_center">Uh oh! Bad JSON data found. Kindly Reset and
+                                            then personalize the content accordingly</p>
                                     </div>
+                                </lightning-layout-item>
+                            </template>
+                            <!-- Error panel for Blank / Incorrect Resume ends-->
 
-                                </template>
-                                <div class="slds-m-around_small slds-border_top"></div>
+                            <!-- Left Panel Starts -->
+                            <lightning-layout-item size="12" large-device-size="3" medium-device-size="4"
+                                small-device-size="12" class="slds-hyphenate">
+                                <template if:true={resume.basics}>
 
-                                <!-- Person Basic Contact Details -->
-                                <lightning-layout multiple-rows>
-                                    <!-- Email -->
-                                    <template if:true={resume.basics.email}>
-                                        <lightning-layout-item size="2" large-device-size="2" medium-device-size="2"
-                                            small-device-size="1" padding="around-small">
-                                            <lightning-icon icon-name="utility:email" size="x-small"
-                                                alternative-text="Email" title="Email"
-                                                class="slds-align_absolute-center"></lightning-icon>
-                                        </lightning-layout-item>
-                                        <lightning-layout-item size="10" large-device-size="10" medium-device-size="10"
-                                            small-device-size="5" padding="around-small">
-                                            {resume.basics.email}
-                                        </lightning-layout-item>
-                                    </template>
-
-
-                                    <!-- Phone -->
-                                    <template if:true={resume.basics.phone}>
-                                        <lightning-layout-item size="2" large-device-size="2" medium-device-size="2"
-                                            small-device-size="1" padding="around-small">
-                                            <lightning-icon icon-name="utility:call" size="x-small"
-                                                alternative-text="Phone" title="Phone"
-                                                class="slds-align_absolute-center"></lightning-icon>
-                                        </lightning-layout-item>
-                                        <lightning-layout-item size="10" large-device-size="10" medium-device-size="10"
-                                            small-device-size="5" padding="around-small">
-
-                                            <lightning-formatted-phone value={resume.basics.phone}>
-                                            </lightning-formatted-phone>
-                                        </lightning-layout-item>
-                                    </template>
-
-                                    <!-- Website -->
-                                    <template if:true={resume.basics.website}>
-                                        <lightning-layout-item size="2" large-device-size="2" medium-device-size="2"
-                                            small-device-size="1" padding="around-small">
-                                            <lightning-icon icon-name="utility:link" size="x-small"
-                                                alternative-text="Website" title="Website"
-                                                class="slds-align_absolute-center"></lightning-icon>
-                                        </lightning-layout-item>
-                                        <lightning-layout-item size="10" large-device-size="10" medium-device-size="10"
-                                            small-device-size="5" padding="around-small">
-                                            <lightning-formatted-url value={resume.basics.website}
-                                                tooltip={resume.basics.website} label={resume.basics.website}
-                                                target="_blank"></lightning-formatted-url>
-                                        </lightning-layout-item>
-                                    </template>
-
-                                    <!-- Location (Country needed to display) -->
-                                    <template if:true={resume.basics.location}>
-                                        <template if:true={resume.basics.location.country}>
-                                            <lightning-layout-item size="2" large-device-size="2" medium-device-size="2"
-                                                small-device-size="1" padding="around-small">
-                                                <lightning-icon icon-name="utility:checkin" size="x-small"
-                                                    alternative-text="Location" title="Location"
-                                                    class="slds-align_absolute-center"></lightning-icon>
-                                            </lightning-layout-item>
-                                            <lightning-layout-item size="10" large-device-size="10"
-                                                medium-device-size="10" small-device-size="5" padding="around-small">
-                                                <div><template
-                                                        if:true={resume.basics.location.street}><span>{resume.basics.location.street}{COMMA_SPACE}
-                                                        </span>
-                                                    </template>
-                                                    <template
-                                                        if:true={resume.basics.location.city}><span>{resume.basics.location.city}{COMMA_SPACE}
-                                                        </span>
-                                                    </template>
-                                                </div>
-                                                <div>
-                                                    <template
-                                                        if:true={resume.basics.location.state}><span>{resume.basics.location.state}{COMMA_SPACE}
-                                                        </span>
-                                                    </template>
-                                                    <template
-                                                        if:true={resume.basics.location.postalCode}><span>{resume.basics.location.postalCode}{COMMA_SPACE}
-                                                        </span>
-                                                    </template>
-                                                    <template
-                                                        if:true={resume.basics.location.country}><span>{resume.basics.location.country}</span></template>
-                                                </div>
-                                            </lightning-layout-item>
+                                    <!-- NOT USING BECAUSE any * IMAGE SOURCE DENIED BY Content Security Policy. Safety over unsafe features. :) -->
+                                    <!--  Conditional Display of User Image -->
+                                    <!-- <template if:true={boolShowPicture}>
+                                        <template if:true={resume.basics.picture}>
+                                            <img class="slds-align_absolute-center" src={resume.basics.picture}
+                                                alt="Display Picture" height="100px" width="100px"></img>
                                         </template>
+                                    </template> -->
+
+                                    <!-- Details -->
+                                    <div class="slds-text-heading_medium slds-align_absolute-center slds-p-top_x-small">
+                                        {resume.basics.name}</div>
+                                    <template if:true={resume.basics.label}>
+                                        <div class="slds-text-heading_small slds-align_absolute-center">
+                                            {resume.basics.label}
+                                        </div>
+
                                     </template>
-                                </lightning-layout>
+                                    <div class="slds-m-around_small slds-border_top"></div>
 
-                                <div class="slds-m-horizontal_small slds-border_top"></div>
-
-
-                                <!-- Basic Profile Details -->
-                                <template if:true={resume.basics.profiles}>
-                                    <template if:true={resume.basics.profiles.length}>
-                                        <lightning-layout multiple-rows>
+                                    <!-- Person Basic Contact Details -->
+                                    <lightning-layout multiple-rows>
+                                        <!-- Email -->
+                                        <template if:true={resume.basics.email}>
                                             <lightning-layout-item size="2" large-device-size="2" medium-device-size="2"
                                                 small-device-size="1" padding="around-small">
-                                                <lightning-icon icon-name="utility:world" size="x-small"
-                                                    alternative-text="Online Profiles" title="Online Profiles"
-                                                    class="slds-align_absolute-center">
+                                                <lightning-icon icon-name="utility:email" size="x-small"
+                                                    alternative-text="Email" title="Email"
+                                                    class="slds-align_absolute-center utility-icon" variant="base">
                                                 </lightning-icon>
                                             </lightning-layout-item>
                                             <lightning-layout-item size="10" large-device-size="10"
-                                                medium-device-size="10" small-device-size="11" padding="around-small">
-                                                Online Profiles
+                                                medium-device-size="10" small-device-size="5" padding="around-small">
+                                                {resume.basics.email}
                                             </lightning-layout-item>
+                                        </template>
 
+
+                                        <!-- Phone -->
+                                        <template if:true={resume.basics.phone}>
                                             <lightning-layout-item size="2" large-device-size="2" medium-device-size="2"
                                                 small-device-size="1" padding="around-small">
+                                                <lightning-icon icon-name="utility:call" size="x-small"
+                                                    alternative-text="Phone" title="Phone"
+                                                    class="slds-align_absolute-center utility-icon"></lightning-icon>
                                             </lightning-layout-item>
-
-
                                             <lightning-layout-item size="10" large-device-size="10"
-                                                medium-device-size="10" small-device-size="11">
-                                                <lightning-layout multiple-rows>
-                                                    <template for:each={resume.basics.profiles} for:item="profile">
-
-                                                        <!-- Each Profile Info -->
-                                                        <template if:true={profile.url}>
-                                                            <lightning-layout-item key={profile.url} size="6"
-                                                                large-device-size="6" medium-device-size="6"
-                                                                small-device-size="6" padding="around-small">
-                                                                <lightning-formatted-url value={profile.url}
-                                                                    tooltip={profile.username} label={profile.network}
-                                                                    target="_blank"></lightning-formatted-url>
-                                                            </lightning-layout-item>
-                                                        </template>
-                                                    </template>
-                                                </lightning-layout>
+                                                medium-device-size="10" small-device-size="5" padding="around-small">
+                                                {resume.basics.phone}
                                             </lightning-layout-item>
-                                        </lightning-layout>
-                                        <div class="slds-m-horizontal_small slds-border_top"></div>
-                                    </template>
-                                </template>
-                            </template>
-                        </lightning-layout-item>
-                        <!-- Left Panel Ends -->
+                                        </template>
+
+                                        <!-- Website -->
+                                        <template if:true={resume.basics.website}>
+                                            <lightning-layout-item size="2" large-device-size="2" medium-device-size="2"
+                                                small-device-size="1" padding="around-small">
+                                                <lightning-icon icon-name="utility:link" size="x-small"
+                                                    alternative-text="Website" title="Website"
+                                                    class="slds-align_absolute-center utility-icon"></lightning-icon>
+                                            </lightning-layout-item>
+                                            <lightning-layout-item size="10" large-device-size="10"
+                                                medium-device-size="10" small-device-size="5" padding="around-small">
+                                                <lightning-formatted-url class="url-link" value={resume.basics.website}
+                                                    tooltip={resume.basics.website} label={resume.basics.website}
+                                                    target="_blank"></lightning-formatted-url>
+                                            </lightning-layout-item>
+                                        </template>
+
+                                        <!-- Location (Country needed to display) -->
+                                        <template if:true={resume.basics.location}>
+                                            <template if:true={resume.basics.location.country}>
+                                                <lightning-layout-item size="2" large-device-size="2"
+                                                    medium-device-size="2" small-device-size="1" padding="around-small">
+                                                    <lightning-icon icon-name="utility:checkin" size="x-small"
+                                                        alternative-text="Location" title="Location"
+                                                        class="slds-align_absolute-center utility-icon">
+                                                    </lightning-icon>
+                                                </lightning-layout-item>
+                                                <lightning-layout-item size="10" large-device-size="10"
+                                                    medium-device-size="10" small-device-size="5"
+                                                    padding="around-small">
+                                                    <div><template
+                                                            if:true={resume.basics.location.street}><span>{resume.basics.location.street}{COMMA_SPACE}
+                                                            </span>
+                                                        </template>
+                                                        <template
+                                                            if:true={resume.basics.location.city}><span>{resume.basics.location.city}{COMMA_SPACE}
+                                                            </span>
+                                                        </template>
+                                                    </div>
+                                                    <div>
+                                                        <template
+                                                            if:true={resume.basics.location.state}><span>{resume.basics.location.state}{COMMA_SPACE}
+                                                            </span>
+                                                        </template>
+                                                        <template
+                                                            if:true={resume.basics.location.postalCode}><span>{resume.basics.location.postalCode}{COMMA_SPACE}
+                                                            </span>
+                                                        </template>
+                                                        <template
+                                                            if:true={resume.basics.location.country}><span>{resume.basics.location.country}</span></template>
+                                                    </div>
+                                                </lightning-layout-item>
+                                            </template>
+                                        </template>
+                                    </lightning-layout>
+
+                                    <div class="slds-m-horizontal_small slds-border_top"></div>
 
 
-                        <!-- Right Panel Starts -->
-                        <lightning-layout-item size="12" large-device-size="9" medium-device-size="8"
-                            small-device-size="12" class="slds-border_left">
-                            <lightning-layout multiple-rows>
+                                    <!-- Basic Profile Details -->
+                                    <template if:true={resume.basics.profiles}>
+                                        <template if:true={resume.basics.profiles.length}>
+                                            <lightning-layout multiple-rows>
+                                                <lightning-layout-item size="2" large-device-size="2"
+                                                    medium-device-size="2" small-device-size="1" padding="around-small">
+                                                    <lightning-icon icon-name="utility:world" size="x-small"
+                                                        alternative-text="Online Profiles" title="Online Profiles"
+                                                        class="slds-align_absolute-center utility-icon">
+                                                    </lightning-icon>
+                                                </lightning-layout-item>
+                                                <lightning-layout-item size="10" large-device-size="10"
+                                                    medium-device-size="10" small-device-size="11"
+                                                    padding="around-small">
+                                                    Online Profiles
+                                                </lightning-layout-item>
 
-                                <!-- Professional Summary starts -->
-                                <template if:true={resume.basics}>
-                                    <template if:true={resume.basics.summary}>
+                                                <lightning-layout-item size="2" large-device-size="2"
+                                                    medium-device-size="2" small-device-size="1" padding="around-small">
+                                                </lightning-layout-item>
 
-                                        <lightning-layout-item size="12" padding="horizontal-small">
-                                            <lightning-card icon-name="standard:contact" title="Professional Summary">
-                                                <div class="slds-p-horizontal_small">{resume.basics.summary}</div>
-                                            </lightning-card>
+
+                                                <lightning-layout-item size="10" large-device-size="10"
+                                                    medium-device-size="10" small-device-size="11">
+                                                    <lightning-layout multiple-rows>
+                                                        <template for:each={resume.basics.profiles} for:item="profile">
+
+                                                            <!-- Each Profile Info -->
+                                                            <template if:true={profile.url}>
+                                                                <lightning-layout-item key={profile.url} size="6"
+                                                                    large-device-size="6" medium-device-size="6"
+                                                                    small-device-size="6" padding="around-small">
+                                                                    <lightning-formatted-url value={profile.url}
+                                                                        tooltip={profile.username}
+                                                                        label={profile.network} target="_blank">
+                                                                    </lightning-formatted-url>
+                                                                </lightning-layout-item>
+                                                            </template>
+                                                        </template>
+                                                    </lightning-layout>
+                                                </lightning-layout-item>
+                                            </lightning-layout>
                                             <div class="slds-m-horizontal_small slds-border_top"></div>
-                                        </lightning-layout-item>
+                                        </template>
                                     </template>
                                 </template>
-                                <!-- Professional Summary ends -->
+                            </lightning-layout-item>
+                            <!-- Left Panel Ends -->
 
 
+                            <!-- Right Panel Starts -->
+                            <lightning-layout-item size="12" large-device-size="9" medium-device-size="8"
+                                small-device-size="12" class="slds-border_left">
+                                <lightning-layout multiple-rows>
 
-                                <!-- Work Experience starts -->
-                                <template if:true={resume.work}>
-                                    <lightning-layout-item size="12" padding="horizontal-small">
-                                        <lightning-card icon-name="standard:case" title="Work Experience">
-                                            <div class="slds-progress slds-progress_vertical slds-p-horizontal_small">
-                                                <ol class="slds-progress__list">
-                                                    <!-- Iteration of Work Experiences Below -->
-                                                    <template iterator:work={resume.work}>
-                                                        <!-- First one should be CURRENT -->
-                                                        <template key={work.value.position}>
-                                                            <li key={work.value.position}
-                                                                class="slds-progress__item slds-is-completed">
-                                                                <!-- Conditional Icon for First vs the rest -->
-                                                                <template if:true={work.first}>
-                                                                    <div class="slds-progress__marker">
-                                                                        <span class="slds-assistive-text">Active</span>
-                                                                    </div>
-                                                                </template>
-                                                                <template if:false={work.first}>
-                                                                    <lightning-icon
-                                                                        class="slds-progress__marker slds-progress__marker_icon"
-                                                                        icon-name="utility:success" size="xx-small"
-                                                                        title="Complete" alternative-text="Complete">
+                                    <!-- Professional Summary starts -->
+                                    <template if:true={resume.basics}>
+                                        <template if:true={resume.basics.summary}>
+                                            <lightning-layout-item size="12" padding="horizontal-small">
+                                                <article class="slds-card lgc-bg-inverse">
+                                                    <div class="slds-card__header slds-grid">
+                                                        <header
+                                                            class="slds-media slds-media_center slds-has-flexi-truncate">
+                                                            <div class="slds-media__figure">
+                                                                <span class="slds-icon_container">
+                                                                    <lightning-icon icon-name="standard:contact"
+                                                                        title="Professional Summary" size="small">
                                                                     </lightning-icon>
-                                                                </template>
+                                                                </span>
+                                                            </div>
+                                                            <div class="slds-media__body">
+                                                                <h2 class="slds-card__header-title">
+                                                                    Professional Summary
+                                                                </h2>
+                                                            </div>
+                                                        </header>
+                                                    </div>
+                                                    <div class="slds-card__body slds-card__body_inner">
+                                                        {resume.basics.summary}
+                                                    </div>
+                                                </article>
+                                                <div class="slds-m-horizontal_small slds-border_top"></div>
+                                            </lightning-layout-item>
+                                        </template>
+                                    </template>
+                                    <!-- Professional Summary ends -->
 
-                                                                <div class="slds-progress__item_content">
-                                                                    <lightning-layout multiple-rows>
-                                                                        <lightning-layout-item size="6">
-                                                                            <div class="slds-text-title_bold">
-                                                                                {work.value.position}</div>
-                                                                        </lightning-layout-item>
-                                                                        <lightning-layout-item size="6">
-                                                                            <div
-                                                                                class="slds-text-color_weak slds-text-align_right">
-                                                                                <span>
-                                                                                    <lightning-formatted-date-time
-                                                                                        value={work.value.startDate}
-                                                                                        year="numeric" month="short">
-                                                                                    </lightning-formatted-date-time>
-                                                                                </span> - <template
-                                                                                    if:true={work.value.endDate}><span>
+
+
+                                    <!-- Work Experience starts -->
+                                    <template if:true={resume.work}>
+                                        <lightning-layout-item size="12" padding="horizontal-small">
+                                            <article class="slds-card lgc-bg-inverse">
+                                                <div class="slds-card__header slds-grid">
+                                                    <header
+                                                        class="slds-media slds-media_center slds-has-flexi-truncate">
+                                                        <div class="slds-media__figure">
+                                                            <span class="slds-icon_container">
+                                                                <lightning-icon icon-name="standard:case"
+                                                                    title="Work Experience" size="small">
+                                                                </lightning-icon>
+                                                            </span>
+                                                        </div>
+                                                        <div class="slds-media__body">
+                                                            <h2 class="slds-card__header-title">
+                                                                Work Experience
+                                                            </h2>
+                                                        </div>
+                                                    </header>
+                                                </div>
+                                                <div class="slds-card__body slds-card__body_inner">
+                                                    <div
+                                                        class="slds-progress slds-progress_vertical slds-p-horizontal_small">
+                                                        <ol class="slds-progress__list">
+                                                            <!-- Iteration of Work Experiences Below -->
+                                                            <template iterator:work={resume.work}>
+                                                                <!-- First one should be CURRENT -->
+                                                                <li key={work.value.position}
+                                                                    class="slds-progress__item slds-is-completed">
+                                                                    <!-- Conditional Icon for First vs the rest -->
+                                                                    <template if:true={work.first}>
+                                                                        <div class="slds-progress__marker">
+                                                                            <span
+                                                                                class="slds-assistive-text">Active</span>
+                                                                        </div>
+                                                                    </template>
+                                                                    <template if:false={work.first}>
+                                                                        <lightning-icon
+                                                                            class="slds-progress__marker slds-progress__marker_icon"
+                                                                            icon-name="utility:success" size="xx-small"
+                                                                            title="Complete"
+                                                                            alternative-text="Complete">
+                                                                        </lightning-icon>
+                                                                    </template>
+
+                                                                    <div class="slds-progress__item_content">
+                                                                        <lightning-layout multiple-rows>
+                                                                            <lightning-layout-item size="6">
+                                                                                <div class="slds-text-title_bold">
+                                                                                    {work.value.position}</div>
+                                                                            </lightning-layout-item>
+                                                                            <lightning-layout-item size="6">
+                                                                                <div
+                                                                                    class="slds-text-color_weak weak-text slds-text-align_right">
+                                                                                    <span>
                                                                                         <lightning-formatted-date-time
-                                                                                            value={work.value.endDate}
+                                                                                            value={work.value.startDate}
                                                                                             year="numeric"
                                                                                             month="short">
                                                                                         </lightning-formatted-date-time>
-                                                                                    </span></template><template
-                                                                                    if:false={work.value.endDate}><span>Current</span></template>
-                                                                            </div>
-                                                                        </lightning-layout-item>
-                                                                    </lightning-layout>
+                                                                                    </span> - <template
+                                                                                        if:true={work.value.endDate}><span>
+                                                                                            <lightning-formatted-date-time
+                                                                                                value={work.value.endDate}
+                                                                                                year="numeric"
+                                                                                                month="short">
+                                                                                            </lightning-formatted-date-time>
+                                                                                        </span></template><template
+                                                                                        if:false={work.value.endDate}><span>Current</span></template>
+                                                                                </div>
+                                                                            </lightning-layout-item>
+                                                                        </lightning-layout>
 
-                                                                    <template if:true={work.value.website}>
-                                                                        <lightning-formatted-url
-                                                                            value={work.value.website}
-                                                                            tooltip={work.value.company}
-                                                                            label={work.value.company} target="_blank">
-                                                                        </lightning-formatted-url>
-                                                                    </template>
-                                                                    <template if:false={work.value.website}>
-                                                                        {work.value.company}
-                                                                    </template>
-                                                                    <div>{work.value.summary}</div>
-                                                                    <template if:true={work.value.highlights}>
-                                                                        <ol class="slds-list_dotted">
-                                                                            <template for:each={work.value.highlights}
-                                                                                for:item="highlight">
-                                                                                <li key={highlight}>{highlight}
-                                                                                </li>
-                                                                            </template>
-                                                                        </ol>
-                                                                    </template>
-                                                                </div>
-                                                            </li>
-                                                        </template>
-                                                    </template>
-                                                </ol>
-                                            </div>
-                                        </lightning-card>
-                                        <div class="slds-m-horizontal_small slds-border_top"></div>
-                                    </lightning-layout-item>
-                                </template>
-                                <!-- Work Experience ends -->
-
-                                <!-- Projects  starts -->
-                                <template if:true={resume.projects}>
-                                    <template if:true={resume.projects.length}>
-                                        <lightning-layout-item size="12" padding="horizontal-small">
-                                            <lightning-card icon-name="custom:custom61" title="Projects">
-                                                <template for:each={resume.projects} for:item="project">
-                                                    <div key={project.company}
-                                                        class="slds-p-horizontal_small slds-p-vertical_x-small">
-                                                        <lightning-layout multiple-rows>
-                                                            <lightning-layout-item size="6">
-                                                                <div class="slds-text-title_bold">{project.position}
-                                                                </div>
-                                                                <div>
-                                                                    <template if:true={project.website}>
-                                                                        <lightning-formatted-url value={project.website}
-                                                                            tooltip={project.company}
-                                                                            label={project.company} target="_blank">
-                                                                        </lightning-formatted-url>
-                                                                    </template>
-                                                                    <template if:false={project.website}>
-                                                                        <span>{project.company}</span>
-                                                                    </template>
-                                                                    <template if:true={project.location}>
-                                                                        <span>{COMMA_SPACE}</span><span>{project.location}</span>
-                                                                    </template>
-                                                                </div>
-
-                                                            </lightning-layout-item>
-                                                            <lightning-layout-item size="6">
-                                                                <div class="slds-text-color_weak slds-text-align_right">
-                                                                    <span>
-                                                                        <lightning-formatted-date-time
-                                                                            value={project.startDate} year="numeric"
-                                                                            month="short">
-                                                                        </lightning-formatted-date-time>
-                                                                    </span> - <template if:true={project.endDate}><span>
-                                                                            <lightning-formatted-date-time
-                                                                                value={project.endDate} year="numeric"
-                                                                                month="short">
-                                                                            </lightning-formatted-date-time>
-                                                                        </span></template><template
-                                                                        if:false={project.endDate}><span>Current</span></template>
-                                                                </div>
-                                                            </lightning-layout-item>
-                                                        </lightning-layout>
-                                                        <div>{project.summary}</div>
-                                                        <template if:true={project.keywords}>
-                                                            <template if:true={project.keywords.length}>
-                                                                <template for:each={project.keywords}
-                                                                    for:item="keyword">
-                                                                    <lightning-badge class="slds-m-bottom_xx-small"
-                                                                        key={keyword} label={keyword}>
-                                                                    </lightning-badge>
-                                                                </template>
+                                                                        <template if:true={work.value.website}>
+                                                                            <lightning-formatted-url
+                                                                                value={work.value.website}
+                                                                                tooltip={work.value.company}
+                                                                                label={work.value.company}
+                                                                                target="_blank">
+                                                                            </lightning-formatted-url>
+                                                                        </template>
+                                                                        <template if:false={work.value.website}>
+                                                                            {work.value.company}
+                                                                        </template>
+                                                                        <div>{work.value.summary}</div>
+                                                                        <template if:true={work.value.highlights}>
+                                                                            <ol class="slds-list_dotted">
+                                                                                <template
+                                                                                    for:each={work.value.highlights}
+                                                                                    for:item="highlight">
+                                                                                    <li key={highlight}>{highlight}
+                                                                                    </li>
+                                                                                </template>
+                                                                            </ol>
+                                                                        </template>
+                                                                    </div>
+                                                                </li>
                                                             </template>
-                                                        </template>
+                                                        </ol>
                                                     </div>
-                                                </template>
-                                            </lightning-card>
+                                                </div>
+                                            </article>
                                             <div class="slds-m-horizontal_small slds-border_top"></div>
                                         </lightning-layout-item>
                                     </template>
-                                </template>
-                                <!-- Projects  ends -->
+                                    <!-- Work Experience ends -->
 
+                                    <!-- Projects  starts -->
+                                    <template if:true={resume.projects}>
+                                        <template if:true={resume.projects.length}>
+                                            <lightning-layout-item size="12" padding="horizontal-small">
+                                                <article class="slds-card lgc-bg-inverse">
+                                                    <div class="slds-card__header slds-grid">
+                                                        <header
+                                                            class="slds-media slds-media_center slds-has-flexi-truncate">
+                                                            <div class="slds-media__figure">
+                                                                <span class="slds-icon_container">
+                                                                    <lightning-icon icon-name="custom:custom61"
+                                                                        title="Projects" size="small"></lightning-icon>
+                                                                </span>
+                                                            </div>
+                                                            <div class="slds-media__body">
+                                                                <h2 class="slds-card__header-title">
+                                                                    Projects
+                                                                </h2>
+                                                            </div>
+                                                        </header>
+                                                    </div>
+                                                    <div class="slds-card__body slds-card__body_inner">
+                                                        <template for:each={resume.projects} for:item="project">
+                                                            <div key={project.company}
+                                                                class="slds-p-horizontal_small slds-p-vertical_x-small">
+                                                                <lightning-layout multiple-rows>
+                                                                    <lightning-layout-item size="6">
+                                                                        <div class="slds-text-title_bold">
+                                                                            {project.position}
+                                                                        </div>
+                                                                        <div>
+                                                                            <template if:true={project.website}>
+                                                                                <lightning-formatted-url
+                                                                                    value={project.website}
+                                                                                    tooltip={project.company}
+                                                                                    label={project.company}
+                                                                                    target="_blank">
+                                                                                </lightning-formatted-url>
+                                                                            </template>
+                                                                            <template if:false={project.website}>
+                                                                                <span>{project.company}</span>
+                                                                            </template>
+                                                                            <template if:true={project.location}>
+                                                                                <span>{COMMA_SPACE}</span><span>{project.location}</span>
+                                                                            </template>
+                                                                        </div>
 
-                                <!-- Skills  starts -->
-                                <template if:true={resume.skills}>
-                                    <template if:true={resume.skills.length}>
-                                        <lightning-layout-item size="12" padding="horizontal-small">
-                                            <lightning-card icon-name="standard:skill" title="Skills">
-                                                <template for:each={resume.skills} for:item="skill">
-                                                    <div key={skill.name}
-                                                        class="slds-p-horizontal_small slds-p-vertical_xx-small">
-                                                        <div>
-                                                            <lightning-icon icon-name="utility:favorite"
-                                                                alternative-text={skill.name} size="xx-small">
-                                                            </lightning-icon>
-                                                            <span class="slds-p-horizontal_small">{skill.name}
-                                                            </span>
-                                                            <template if:true={skill.keywords}>
-                                                                <template if:true={skill.keywords.length}>
-                                                                    <div class="slds-p-horizontal_small">
-                                                                        <template for:each={skill.keywords}
+                                                                    </lightning-layout-item>
+                                                                    <lightning-layout-item size="6">
+                                                                        <div
+                                                                            class="slds-text-color_weak weak-text slds-text-align_right">
+                                                                            <span>
+                                                                                <lightning-formatted-date-time
+                                                                                    value={project.startDate}
+                                                                                    year="numeric" month="short">
+                                                                                </lightning-formatted-date-time>
+                                                                            </span> - <template
+                                                                                if:true={project.endDate}><span>
+                                                                                    <lightning-formatted-date-time
+                                                                                        value={project.endDate}
+                                                                                        year="numeric" month="short">
+                                                                                    </lightning-formatted-date-time>
+                                                                                </span></template><template
+                                                                                if:false={project.endDate}><span>Current</span></template>
+                                                                        </div>
+                                                                    </lightning-layout-item>
+                                                                </lightning-layout>
+                                                                <div>{project.summary}</div>
+                                                                <template if:true={project.keywords}>
+                                                                    <template if:true={project.keywords.length}>
+                                                                        <template for:each={project.keywords}
                                                                             for:item="keyword">
                                                                             <lightning-badge
                                                                                 class="slds-m-bottom_xx-small"
                                                                                 key={keyword} label={keyword}>
                                                                             </lightning-badge>
                                                                         </template>
-                                                                    </div>
+                                                                    </template>
                                                                 </template>
-                                                            </template>
-                                                        </div>
+                                                            </div>
+                                                        </template>
                                                     </div>
-                                                </template>
-                                            </lightning-card>
-                                            <div class="slds-m-horizontal_small slds-border_top"></div>
-                                        </lightning-layout-item>
+                                                </article>
+                                                <div class="slds-m-horizontal_small slds-border_top"></div>
+                                            </lightning-layout-item>
+                                        </template>
                                     </template>
-                                </template>
-                                <!-- Skills  ends -->
+                                    <!-- Projects  ends -->
 
-                                <!-- Certifications  starts -->
-                                <template if:true={resume.certifications}>
-                                    <template if:true={resume.certifications.length}>
-                                        <lightning-layout-item size="12" padding="horizontal-small">
-                                            <lightning-card icon-name="standard:reward" title="Certifications">
-                                                <ol class="slds-list_ordered slds-p-horizontal_small">
-                                                    <template for:each={resume.certifications} for:item="cert">
-                                                        <li key={cert.name} class="slds-p-vertical_xx-small">
-                                                            <div>
-                                                                <span class="slds-p-horizontal_small">{cert.name}
+
+                                    <!-- Skills  starts -->
+                                    <template if:true={resume.skills}>
+                                        <template if:true={resume.skills.length}>
+                                            <lightning-layout-item size="12" padding="horizontal-small">
+                                                <article class="slds-card lgc-bg-inverse">
+                                                    <div class="slds-card__header slds-grid">
+                                                        <header
+                                                            class="slds-media slds-media_center slds-has-flexi-truncate">
+                                                            <div class="slds-media__figure">
+                                                                <span class="slds-icon_container">
+                                                                    <lightning-icon icon-name="standard:skill"
+                                                                        title="Skils" size="small"></lightning-icon>
                                                                 </span>
-                                                                <template if:true={cert.issuedDate}>
-                                                                    <span>(
-                                                                        <lightning-formatted-date-time
-                                                                            value={cert.issuedDate} year="numeric"
-                                                                            month="short">
-                                                                        </lightning-formatted-date-time>)
+                                                            </div>
+                                                            <div class="slds-media__body">
+                                                                <h2 class="slds-card__header-title">
+                                                                    Skills
+                                                                </h2>
+                                                            </div>
+                                                        </header>
+                                                    </div>
+                                                    <div class="slds-card__body slds-card__body_inner">
+                                                        <template for:each={resume.skills} for:item="skill">
+                                                            <div key={skill.name}
+                                                                class="slds-p-horizontal_small slds-p-vertical_xx-small">
+                                                                <div>
+                                                                    <lightning-icon icon-name="utility:favorite"
+                                                                        alternative-text={skill.name} size="xx-small"
+                                                                        class="utility-icon">
+                                                                    </lightning-icon>
+                                                                    <span class="slds-p-horizontal_small">{skill.name}
                                                                     </span>
-                                                                </template>
-                                                            </div>
-                                                        </li>
-                                                    </template>
-                                                </ol>
-                                            </lightning-card>
-                                            <div class="slds-m-horizontal_small slds-border_top"></div>
-                                        </lightning-layout-item>
-                                    </template>
-                                </template>
-                                <!-- Certifications  ends -->
-
-                                <!-- Education  starts -->
-                                <template if:true={resume.education}>
-                                    <template if:true={resume.education.length}>
-                                        <lightning-layout-item size="12" padding="horizontal-small">
-                                            <lightning-card icon-name="standard:education" title="Education">
-
-                                                <ol class="slds-list_dotted slds-p-horizontal_small">
-                                                    <template for:each={resume.education} for:item="edu">
-                                                        <li key={edu.studyType} class="slds-p-vertical_xx-small">
-                                                            <div
-                                                                class="slds-p-horizontal_xx-small slds-text-title_bold">
-                                                                <span>{edu.studyType}</span><span>{COMMA_SPACE}</span><span>{edu.area}</span><span>{COMMA_SPACE}</span><span>{edu.institution}</span>
-                                                            </div>
-                                                            <template if:true={edu.gpa}>
-                                                                <div class="slds-p-horizontal_xx-small">GPA =
-                                                                    <span>{edu.gpa}</span>
-                                                                </div>
-                                                            </template>
-                                                            <div>
-                                                                <template if:true={edu.startDate}>
-                                                                    <span class="slds-p-horizontal_xx-small">
-                                                                        <lightning-formatted-date-time
-                                                                            value={edu.startDate} year="numeric"
-                                                                            month="short">
-                                                                        </lightning-formatted-date-time>
-                                                                    </span><span>-</span>
-                                                                </template>
-                                                                <template if:true={edu.endDate}>
-                                                                    <span class="slds-p-horizontal_xx-small">
-                                                                        <lightning-formatted-date-time
-                                                                            value={edu.endDate} year="numeric"
-                                                                            month="short">
-                                                                        </lightning-formatted-date-time>
-                                                                    </span>
-                                                                </template>
-                                                            </div>
-                                                        </li>
-                                                    </template>
-                                                </ol>
-                                            </lightning-card>
-                                            <div class="slds-m-horizontal_small slds-border_top"></div>
-                                        </lightning-layout-item>
-                                    </template>
-                                </template>
-                                <!-- Education  ends -->
-
-
-                                <!-- References  starts -->
-                                <template if:true={resume.references}>
-                                    <template if:true={resume.references.length}>
-
-                                        <lightning-layout-item size="12" padding="horizontal-small">
-                                            <lightning-card icon-name="standard:snippet" title="References">
-                                                <ol class="slds-list_dotted slds-p-horizontal_small">
-                                                    <template for:each={resume.references} for:item="ref">
-                                                        <li key={ref.name} class="slds-p-vertical_xx-small">
-                                                            <div class="slds-p-horizontal_xx-small">
-                                                                <span
-                                                                    class="slds-text-title_bold">{ref.name}</span><span>{COMMA_SPACE}</span><span>{ref.title}</span>
-                                                            </div>
-                                                            <div class="slds-p-horizontal_small">
-                                                                <em>{QUOTATION}{ref.reference}{QUOTATION}</em>
-                                                            </div>
-                                                        </li>
-                                                    </template>
-                                                </ol>
-                                            </lightning-card>
-                                            <div class="slds-m-horizontal_small slds-border_top"></div>
-                                        </lightning-layout-item>
-                                    </template>
-                                </template>
-                                <!-- References  ends -->
-
-                                <!-- Publications  starts -->
-                                <template if:true={resume.publications}>
-                                    <template if:true={resume.publications.length}>
-                                        <lightning-layout-item size="12" padding="horizontal-small">
-                                            <lightning-card icon-name="custom:custom35"
-                                                title="Publications & Presentations">
-                                                <lightning-layout multiple-rows class="slds-p-vertical_x-small">
-                                                    <template for:each={resume.publications} for:item="pub">
-                                                        <lightning-layout-item key={pub.name} size="8"
-                                                            large-device-size="4" medium-device-size="4"
-                                                            small-device-size="8" class="slds-p-horizontal_medium">
-
-                                                            <template if:true={pub.website}>
-                                                                <lightning-formatted-url value={pub.website}
-                                                                    tooltip={pub.name} label={pub.name} target="_blank">
-                                                                </lightning-formatted-url>
-                                                            </template>
-                                                            <template if:false={pub.website}>
-                                                                <div class="slds-text-title_bold">{pub.name}
-                                                                </div>
-                                                            </template>
-                                                            <div>
-                                                                {pub.publisher}
-                                                            </div>
-                                                            <div>{pub.summary}</div>
-                                                        </lightning-layout-item>
-                                                        <lightning-layout-item key={pub.name} size="4"
-                                                            large-device-size="2" medium-device-size="2"
-                                                            small-device-size="4" class="slds-p-horizontal_medium">
-                                                            <div class="slds-text-color_weak slds-text-align_right">
-                                                                <template if:true={pub.releaseDate}>
-                                                                    <lightning-formatted-date-time
-                                                                        value={pub.releaseDate} year="numeric"
-                                                                        month="short">
-                                                                    </lightning-formatted-date-time>
-                                                                </template>
-                                                            </div>
-                                                        </lightning-layout-item>
-                                                    </template>
-                                                </lightning-layout>
-                                            </lightning-card>
-                                            <div class="slds-m-horizontal_small slds-border_top"></div>
-                                        </lightning-layout-item>
-                                    </template>
-                                </template>
-                                <!-- Publications  ends -->
-
-                                <!-- Volunteer  starts -->
-                                <template if:true={resume.volunteer}>
-                                    <template if:true={resume.volunteer.length}>
-                                        <lightning-layout-item size="12" padding="horizontal-small">
-                                            <lightning-card icon-name="custom:custom1" title="Volunteer Activities">
-                                                <lightning-layout multiple-rows class="slds-p-vertical_x-small">
-                                                    <template for:each={resume.volunteer} for:item="vol">
-
-                                                        <lightning-layout-item key={vol.organization} size="6"
-                                                            large-device-size="3" medium-device-size="3"
-                                                            small-device-size="6" class="slds-p-horizontal_medium">
-                                                            <div class="slds-text-title_bold">{vol.position}
-                                                            </div>
-                                                            <div>
-                                                                <template if:true={vol.website}>
-                                                                    <lightning-formatted-url value={vol.website}
-                                                                        tooltip={vol.organization}
-                                                                        label={vol.organization} target="_blank">
-                                                                    </lightning-formatted-url>
-                                                                </template>
-                                                                <template if:false={vol.website}>
-                                                                    <span>{vol.organization}</span>
-                                                                </template>
-                                                                <template if:true={vol.location}>
-                                                                    <span>{COMMA_SPACE}</span><span>{vol.location}</span>
-                                                                </template>
-                                                                <div>{vol.summary}</div>
-                                                                <template if:true={vol.highlights}>
-                                                                    <template if:true={vol.highlights.length}>
-                                                                        <template for:each={vol.highlights}
-                                                                            for:item="highlight">
-                                                                            <lightning-badge
-                                                                                class="slds-m-bottom_xx-small"
-                                                                                key={highlight} label={highlight}>
-                                                                            </lightning-badge>
+                                                                    <template if:true={skill.keywords}>
+                                                                        <template if:true={skill.keywords.length}>
+                                                                            <div class="slds-p-horizontal_small">
+                                                                                <template for:each={skill.keywords}
+                                                                                    for:item="keyword">
+                                                                                    <lightning-badge
+                                                                                        class="slds-m-bottom_xx-small"
+                                                                                        key={keyword} label={keyword}>
+                                                                                    </lightning-badge>
+                                                                                </template>
+                                                                            </div>
                                                                         </template>
                                                                     </template>
-                                                                </template>
+                                                                </div>
                                                             </div>
-                                                        </lightning-layout-item>
-                                                        <lightning-layout-item key={vol.organization} size="6"
-                                                            large-device-size="3" medium-device-size="3"
-                                                            small-device-size="6" class="slds-p-horizontal_medium">
-                                                            <div class="slds-text-color_weak slds-text-align_right">
-                                                                <span>
-                                                                    <lightning-formatted-date-time value={vol.startDate}
-                                                                        year="numeric" month="short">
-                                                                    </lightning-formatted-date-time>
-                                                                </span> - <template if:true={vol.endDate}><span>
-                                                                        <lightning-formatted-date-time
-                                                                            value={vol.endDate} year="numeric"
-                                                                            month="short">
-                                                                        </lightning-formatted-date-time>
-                                                                    </span></template><template
-                                                                    if:false={vol.endDate}><span>Current</span></template>
-                                                            </div>
-                                                        </lightning-layout-item>
-                                                    </template>
-                                                </lightning-layout>
-                                            </lightning-card>
-                                            <div class="slds-m-horizontal_small slds-border_top"></div>
-                                        </lightning-layout-item>
+                                                        </template>
+                                                    </div>
+                                                </article>
+                                                <div class="slds-m-horizontal_small slds-border_top"></div>
+                                            </lightning-layout-item>
+                                        </template>
                                     </template>
-                                </template>
-                                <!-- Volunteer  ends -->
+                                    <!-- Skills  ends -->
 
-                                <!-- Awards  starts -->
-                                <template if:true={resume.awards}>
-                                    <template if:true={resume.awards.length}>
-                                        <lightning-layout-item size="12" padding="horizontal-small">
-                                            <lightning-card icon-name="custom:custom48" title="Awards">
-                                                <lightning-layout multiple-rows class="slds-p-vertical_x-small">
-                                                    <template for:each={resume.awards} for:item="award">
-                                                        <lightning-layout-item key={award.title} size="8"
-                                                            large-device-size="4" medium-device-size="4"
-                                                            small-device-size="8" class="slds-p-horizontal_medium">
-                                                            <div class="slds-text-title_bold">{award.title}
-                                                            </div>
-                                                            <div>
-                                                                {award.awarder}
-                                                            </div>
-                                                            <div>{award.summary}</div>
-                                                        </lightning-layout-item>
-                                                        <lightning-layout-item key={award.title} size="4"
-                                                            large-device-size="2" medium-device-size="2"
-                                                            small-device-size="4" class="slds-p-horizontal_medium">
-                                                            <div class="slds-text-color_weak slds-text-align_right">
-                                                                <template if:true={award.date}>
-                                                                    <lightning-formatted-date-time value={award.date}
-                                                                        year="numeric" month="short">
-                                                                    </lightning-formatted-date-time>
-                                                                </template>
-                                                            </div>
-                                                        </lightning-layout-item>
-                                                    </template>
-                                                </lightning-layout>
-                                            </lightning-card>
-                                            <div class="slds-m-horizontal_small slds-border_top"></div>
-                                        </lightning-layout-item>
-                                    </template>
-                                </template>
-                                <!-- Awards  ends -->
-
-                                <!-- Languages  starts -->
-                                <template if:true={resume.languages}>
-                                    <template if:true={resume.languages.length}>
-
-                                        <lightning-layout-item size="12" large-device-size="6" medium-device-size="6"
-                                            small-device-size="12" padding="horizontal-small">
-                                            <lightning-card icon-name="standard:feedback" title="Languages">
-                                                <ol class="slds-list_dotted slds-p-horizontal_small">
-                                                    <template for:each={resume.languages} for:item="lang">
-                                                        <li key={lang.studyType} class="slds-p-vertical_xx-small">
-                                                            <div class="slds-p-horizontal_xx-small">
-                                                                <span
-                                                                    class="slds-text-title_bold">{lang.language}</span><span
-                                                                    class="slds-p-horizontal_small">{lang.fluency}</span>
-                                                            </div>
-                                                        </li>
-                                                    </template>
-                                                </ol>
-                                            </lightning-card>
-                                        </lightning-layout-item>
-                                    </template>
-                                </template>
-                                <!-- Languages  ends -->
-
-                                <!-- Interests  starts -->
-                                <template if:true={resume.interests}>
-                                    <template if:true={resume.interests.length}>
-
-                                        <lightning-layout-item size="12" large-device-size="6" medium-device-size="6"
-                                            small-device-size="12" padding="horizontal-small">
-                                            <lightning-card icon-name="standard:brand" title="Interests">
-                                                <ol class="slds-list_dotted slds-p-horizontal_small">
-                                                    <template for:each={resume.interests} for:item="interest">
-                                                        <li key={interest.name} class="slds-p-vertical_xx-small">
-                                                            <div>
-                                                                <span class="slds-p-horizontal_xx-small">{interest.name}
+                                    <!-- Certifications  starts -->
+                                    <template if:true={resume.certifications}>
+                                        <template if:true={resume.certifications.length}>
+                                            <lightning-layout-item size="12" padding="horizontal-small">
+                                                <article class="slds-card lgc-bg-inverse">
+                                                    <div class="slds-card__header slds-grid">
+                                                        <header
+                                                            class="slds-media slds-media_center slds-has-flexi-truncate">
+                                                            <div class="slds-media__figure">
+                                                                <span class="slds-icon_container">
+                                                                    <lightning-icon icon-name="standard:reward"
+                                                                        title="Certifications" size="small">
+                                                                    </lightning-icon>
                                                                 </span>
-                                                                <template if:true={interest.keywords}>
-                                                                    <template if:true={interest.keywords.length}>
-                                                                        <span class="slds-p-horizontal_small">
-                                                                            <template for:each={interest.keywords}
-                                                                                for:item="keyword">
-                                                                                <lightning-badge
-                                                                                    class="slds-m-bottom_xx-small"
-                                                                                    key={keyword} label={keyword}>
-                                                                                </lightning-badge>
-                                                                            </template>
-                                                                        </span>
-                                                                    </template>
-                                                                </template>
                                                             </div>
-                                                        </li>
-                                                    </template>
-                                                </ol>
-                                            </lightning-card>
-                                        </lightning-layout-item>
+                                                            <div class="slds-media__body">
+                                                                <h2 class="slds-card__header-title">
+                                                                    Certifications
+                                                                </h2>
+                                                            </div>
+                                                        </header>
+                                                    </div>
+                                                    <div class="slds-card__body slds-card__body_inner">
+                                                        <ol class="slds-list_ordered slds-p-horizontal_small">
+                                                            <template for:each={resume.certifications} for:item="cert">
+                                                                <li key={cert.name} class="slds-p-vertical_xx-small">
+                                                                    <div>
+                                                                        <span
+                                                                            class="slds-p-horizontal_small">{cert.name}
+                                                                        </span>
+                                                                        <template if:true={cert.issuedDate}>
+                                                                            <span>(
+                                                                                <lightning-formatted-date-time
+                                                                                    value={cert.issuedDate}
+                                                                                    year="numeric" month="short">
+                                                                                </lightning-formatted-date-time>)
+                                                                            </span>
+                                                                        </template>
+                                                                    </div>
+                                                                </li>
+                                                            </template>
+                                                        </ol>
+                                                    </div>
+                                                </article>
+                                                <div class="slds-m-horizontal_small slds-border_top"></div>
+                                            </lightning-layout-item>
+                                        </template>
                                     </template>
-                                </template>
-                                <!-- Interests  ends -->
+                                    <!-- Certifications  ends -->
+
+                                    <!-- Education  starts -->
+                                    <template if:true={resume.education}>
+                                        <template if:true={resume.education.length}>
+                                            <lightning-layout-item size="12" padding="horizontal-small">
+
+                                                <article class="slds-card lgc-bg-inverse">
+                                                    <div class="slds-card__header slds-grid">
+                                                        <header
+                                                            class="slds-media slds-media_center slds-has-flexi-truncate">
+                                                            <div class="slds-media__figure">
+                                                                <span class="slds-icon_container">
+                                                                    <lightning-icon icon-name="standard:education"
+                                                                        title="Education" size="small"></lightning-icon>
+                                                                </span>
+                                                            </div>
+                                                            <div class="slds-media__body">
+                                                                <h2 class="slds-card__header-title">
+                                                                    Education
+                                                                </h2>
+                                                            </div>
+                                                        </header>
+                                                    </div>
+                                                    <div class="slds-card__body slds-card__body_inner">
+                                                        <ol class="slds-list_dotted slds-p-horizontal_small">
+                                                            <template for:each={resume.education} for:item="edu">
+                                                                <li key={edu.studyType}
+                                                                    class="slds-p-vertical_xx-small">
+                                                                    <div
+                                                                        class="slds-p-horizontal_xx-small slds-text-title_bold">
+                                                                        <span>{edu.studyType}</span><span>{COMMA_SPACE}</span><span>{edu.area}</span><span>{COMMA_SPACE}</span><span>{edu.institution}</span>
+                                                                    </div>
+                                                                    <template if:true={edu.gpa}>
+                                                                        <div class="slds-p-horizontal_xx-small">GPA =
+                                                                            <span>{edu.gpa}</span>
+                                                                        </div>
+                                                                    </template>
+                                                                    <div>
+                                                                        <template if:true={edu.startDate}>
+                                                                            <span class="slds-p-horizontal_xx-small">
+                                                                                <lightning-formatted-date-time
+                                                                                    value={edu.startDate} year="numeric"
+                                                                                    month="short">
+                                                                                </lightning-formatted-date-time>
+                                                                            </span><span>-</span>
+                                                                        </template>
+                                                                        <template if:true={edu.endDate}>
+                                                                            <span class="slds-p-horizontal_xx-small">
+                                                                                <lightning-formatted-date-time
+                                                                                    value={edu.endDate} year="numeric"
+                                                                                    month="short">
+                                                                                </lightning-formatted-date-time>
+                                                                            </span>
+                                                                        </template>
+                                                                    </div>
+                                                                </li>
+                                                            </template>
+                                                        </ol>
+                                                    </div>
+                                                </article>
+                                                <div class="slds-m-horizontal_small slds-border_top"></div>
+                                            </lightning-layout-item>
+                                        </template>
+                                    </template>
+                                    <!-- Education  ends -->
 
 
+                                    <!-- References  starts -->
+                                    <template if:true={resume.references}>
+                                        <template if:true={resume.references.length}>
+                                            <lightning-layout-item size="12" padding="horizontal-small">
+                                                <article class="slds-card lgc-bg-inverse">
+                                                    <div class="slds-card__header slds-grid">
+                                                        <header
+                                                            class="slds-media slds-media_center slds-has-flexi-truncate">
+                                                            <div class="slds-media__figure">
+                                                                <span class="slds-icon_container">
+                                                                    <lightning-icon icon-name="standard:snippet"
+                                                                        title="References" size="small">
+                                                                    </lightning-icon>
+                                                                </span>
+                                                            </div>
+                                                            <div class="slds-media__body">
+                                                                <h2 class="slds-card__header-title">
+                                                                    References
+                                                                </h2>
+                                                            </div>
+                                                        </header>
+                                                    </div>
+                                                    <div class="slds-card__body slds-card__body_inner">
+                                                        <ol class="slds-list_dotted slds-p-horizontal_small">
+                                                            <template for:each={resume.references} for:item="ref">
+                                                                <li key={ref.name} class="slds-p-vertical_xx-small">
+                                                                    <div class="slds-p-horizontal_xx-small">
+                                                                        <span
+                                                                            class="slds-text-title_bold">{ref.name}</span><span>{COMMA_SPACE}</span><span>{ref.title}</span>
+                                                                    </div>
+                                                                    <div class="slds-p-horizontal_small">
+                                                                        <em>{QUOTATION}{ref.reference}{QUOTATION}</em>
+                                                                    </div>
+                                                                </li>
+                                                            </template>
+                                                        </ol>
+                                                    </div>
+                                                </article>
+                                                <div class="slds-m-horizontal_small slds-border_top"></div>
+                                            </lightning-layout-item>
+                                        </template>
+                                    </template>
+                                    <!-- References  ends -->
 
-                                <lightning-layout-item size="12" padding="horizontal-small">
-                                    <div class="slds-m-horizontal_small slds-border_top"></div>
-                                </lightning-layout-item>
+                                    <!-- Publications  starts -->
+                                    <template if:true={resume.publications}>
+                                        <template if:true={resume.publications.length}>
+                                            <lightning-layout-item size="12" padding="horizontal-small">
+                                                <article class="slds-card lgc-bg-inverse">
+                                                    <div class="slds-card__header slds-grid">
+                                                        <header
+                                                            class="slds-media slds-media_center slds-has-flexi-truncate">
+                                                            <div class="slds-media__figure">
+                                                                <span class="slds-icon_container">
+                                                                    <lightning-icon icon-name="custom:custom35"
+                                                                        title="Publications & Presentations"
+                                                                        size="small"></lightning-icon>
+                                                                </span>
+                                                            </div>
+                                                            <div class="slds-media__body">
+                                                                <h2 class="slds-card__header-title">
+                                                                    Publications & Presentations
+                                                                </h2>
+                                                            </div>
+                                                        </header>
+                                                    </div>
+                                                    <div class="slds-card__body slds-card__body_inner">
+                                                        <lightning-layout multiple-rows class="slds-p-vertical_x-small">
+                                                            <template for:each={resume.publications} for:item="pub">
+                                                                <lightning-layout-item key={pub.name} size="8"
+                                                                    large-device-size="4" medium-device-size="4"
+                                                                    small-device-size="8"
+                                                                    class="slds-p-horizontal_medium">
 
-                            </lightning-layout>
+                                                                    <template if:true={pub.website}>
+                                                                        <lightning-formatted-url value={pub.website}
+                                                                            tooltip={pub.name} label={pub.name}
+                                                                            target="_blank">
+                                                                        </lightning-formatted-url>
+                                                                    </template>
+                                                                    <template if:false={pub.website}>
+                                                                        <div class="slds-text-title_bold">{pub.name}
+                                                                        </div>
+                                                                    </template>
+                                                                    <div>
+                                                                        {pub.publisher}
+                                                                    </div>
+                                                                    <div>{pub.summary}</div>
+                                                                </lightning-layout-item>
+                                                                <lightning-layout-item key={pub.name} size="4"
+                                                                    large-device-size="2" medium-device-size="2"
+                                                                    small-device-size="4"
+                                                                    class="slds-p-horizontal_medium">
+                                                                    <div
+                                                                        class="slds-text-color_weak weak-text slds-text-align_right">
+                                                                        <template if:true={pub.releaseDate}>
+                                                                            <lightning-formatted-date-time
+                                                                                value={pub.releaseDate} year="numeric"
+                                                                                month="short">
+                                                                            </lightning-formatted-date-time>
+                                                                        </template>
+                                                                    </div>
+                                                                </lightning-layout-item>
+                                                            </template>
+                                                        </lightning-layout>
+                                                    </div>
+                                                </article>
+                                                <div class="slds-m-horizontal_small slds-border_top"></div>
+                                            </lightning-layout-item>
+                                        </template>
+                                    </template>
+                                    <!-- Publications  ends -->
 
-                        </lightning-layout-item>
-                        <!-- Right Panel Ends -->
+                                    <!-- Volunteer  starts -->
+                                    <template if:true={resume.volunteer}>
+                                        <template if:true={resume.volunteer.length}>
+                                            <lightning-layout-item size="12" padding="horizontal-small">
+                                                <article class="slds-card lgc-bg-inverse">
+                                                    <div class="slds-card__header slds-grid">
+                                                        <header
+                                                            class="slds-media slds-media_center slds-has-flexi-truncate">
+                                                            <div class="slds-media__figure">
+                                                                <span class="slds-icon_container">
+                                                                    <lightning-icon icon-name="custom:custom1"
+                                                                        title="Volunteer Activities" size="small">
+                                                                    </lightning-icon>
+                                                                </span>
+                                                            </div>
+                                                            <div class="slds-media__body">
+                                                                <h2 class="slds-card__header-title">
+                                                                    Volunteer Activities
+                                                                </h2>
+                                                            </div>
+                                                        </header>
+                                                    </div>
+                                                    <div class="slds-card__body slds-card__body_inner">
+                                                        <lightning-layout multiple-rows class="slds-p-vertical_x-small">
+                                                            <template for:each={resume.volunteer} for:item="vol">
 
-                    </lightning-layout>
-                </template>
-            </lightning-card>
+                                                                <lightning-layout-item key={vol.organization} size="6"
+                                                                    large-device-size="3" medium-device-size="3"
+                                                                    small-device-size="6"
+                                                                    class="slds-p-horizontal_medium">
+                                                                    <div class="slds-text-title_bold">{vol.position}
+                                                                    </div>
+                                                                    <div>
+                                                                        <template if:true={vol.website}>
+                                                                            <lightning-formatted-url value={vol.website}
+                                                                                tooltip={vol.organization}
+                                                                                label={vol.organization}
+                                                                                target="_blank">
+                                                                            </lightning-formatted-url>
+                                                                        </template>
+                                                                        <template if:false={vol.website}>
+                                                                            <span>{vol.organization}</span>
+                                                                        </template>
+                                                                        <template if:true={vol.location}>
+                                                                            <span>{COMMA_SPACE}</span><span>{vol.location}</span>
+                                                                        </template>
+                                                                        <div>{vol.summary}</div>
+                                                                        <template if:true={vol.highlights}>
+                                                                            <template if:true={vol.highlights.length}>
+                                                                                <template for:each={vol.highlights}
+                                                                                    for:item="highlight">
+                                                                                    <lightning-badge
+                                                                                        class="slds-m-bottom_xx-small"
+                                                                                        key={highlight}
+                                                                                        label={highlight}>
+                                                                                    </lightning-badge>
+                                                                                </template>
+                                                                            </template>
+                                                                        </template>
+                                                                    </div>
+                                                                </lightning-layout-item>
+                                                                <lightning-layout-item key={vol.organization} size="6"
+                                                                    large-device-size="3" medium-device-size="3"
+                                                                    small-device-size="6"
+                                                                    class="slds-p-horizontal_medium">
+                                                                    <div
+                                                                        class="slds-text-color_weak weak-text slds-text-align_right">
+                                                                        <span>
+                                                                            <lightning-formatted-date-time
+                                                                                value={vol.startDate} year="numeric"
+                                                                                month="short">
+                                                                            </lightning-formatted-date-time>
+                                                                        </span> - <template if:true={vol.endDate}><span>
+                                                                                <lightning-formatted-date-time
+                                                                                    value={vol.endDate} year="numeric"
+                                                                                    month="short">
+                                                                                </lightning-formatted-date-time>
+                                                                            </span></template><template
+                                                                            if:false={vol.endDate}><span>Current</span></template>
+                                                                    </div>
+                                                                </lightning-layout-item>
+                                                            </template>
+                                                        </lightning-layout>
+                                                    </div>
+                                                </article>
+                                                <div class="slds-m-horizontal_small slds-border_top"></div>
+                                            </lightning-layout-item>
+                                        </template>
+                                    </template>
+                                    <!-- Volunteer  ends -->
+
+                                    <!-- Awards  starts -->
+                                    <template if:true={resume.awards}>
+                                        <template if:true={resume.awards.length}>
+                                            <lightning-layout-item size="12" padding="horizontal-small">
+
+                                                <article class="slds-card lgc-bg-inverse">
+                                                    <div class="slds-card__header slds-grid">
+                                                        <header
+                                                            class="slds-media slds-media_center slds-has-flexi-truncate">
+                                                            <div class="slds-media__figure">
+                                                                <span class="slds-icon_container">
+                                                                    <lightning-icon icon-name="custom:custom48"
+                                                                        title="Awards" size="small"></lightning-icon>
+                                                                </span>
+                                                            </div>
+                                                            <div class="slds-media__body">
+                                                                <h2 class="slds-card__header-title">
+                                                                    Awards
+                                                                </h2>
+                                                            </div>
+                                                        </header>
+                                                    </div>
+                                                    <div class="slds-card__body slds-card__body_inner">
+                                                        <lightning-layout multiple-rows class="slds-p-vertical_x-small">
+                                                            <template for:each={resume.awards} for:item="award">
+                                                                <lightning-layout-item key={award.title} size="8"
+                                                                    large-device-size="4" medium-device-size="4"
+                                                                    small-device-size="8"
+                                                                    class="slds-p-horizontal_medium">
+                                                                    <div class="slds-text-title_bold">{award.title}
+                                                                    </div>
+                                                                    <div>
+                                                                        {award.awarder}
+                                                                    </div>
+                                                                    <div>{award.summary}</div>
+                                                                </lightning-layout-item>
+                                                                <lightning-layout-item key={award.title} size="4"
+                                                                    large-device-size="2" medium-device-size="2"
+                                                                    small-device-size="4"
+                                                                    class="slds-p-horizontal_medium">
+                                                                    <div
+                                                                        class="slds-text-color_weak weak-text slds-text-align_right">
+                                                                        <template if:true={award.date}>
+                                                                            <lightning-formatted-date-time
+                                                                                value={award.date} year="numeric"
+                                                                                month="short">
+                                                                            </lightning-formatted-date-time>
+                                                                        </template>
+                                                                    </div>
+                                                                </lightning-layout-item>
+                                                            </template>
+                                                        </lightning-layout>
+                                                    </div>
+                                                </article>
+                                                <div class="slds-m-horizontal_small slds-border_top"></div>
+                                            </lightning-layout-item>
+                                        </template>
+                                    </template>
+                                    <!-- Awards  ends -->
+
+                                    <!-- Languages  starts -->
+                                    <template if:true={resume.languages}>
+                                        <template if:true={resume.languages.length}>
+                                            <lightning-layout-item size="12" large-device-size="6"
+                                                medium-device-size="6" small-device-size="12"
+                                                padding="horizontal-small">
+
+                                                <article class="slds-card lgc-bg-inverse">
+                                                    <div class="slds-card__header slds-grid">
+                                                        <header
+                                                            class="slds-media slds-media_center slds-has-flexi-truncate">
+                                                            <div class="slds-media__figure">
+                                                                <span class="slds-icon_container">
+                                                                    <lightning-icon icon-name="standard:feedback"
+                                                                        title="Languages" size="small"></lightning-icon>
+                                                                </span>
+                                                            </div>
+                                                            <div class="slds-media__body">
+                                                                <h2 class="slds-card__header-title">
+                                                                    Languages
+                                                                </h2>
+                                                            </div>
+                                                        </header>
+                                                    </div>
+                                                    <div class="slds-card__body slds-card__body_inner">
+                                                        <ol class="slds-list_dotted slds-p-horizontal_small">
+                                                            <template for:each={resume.languages} for:item="lang">
+                                                                <li key={lang.language}
+                                                                    class="slds-p-vertical_xx-small">
+                                                                    <div class="slds-p-horizontal_xx-small">
+                                                                        <span
+                                                                            class="slds-text-title_bold">{lang.language}</span><span
+                                                                            class="slds-p-horizontal_small">{lang.fluency}</span>
+                                                                    </div>
+                                                                </li>
+                                                            </template>
+                                                        </ol>
+                                                    </div>
+                                                </article>
+                                            </lightning-layout-item>
+                                        </template>
+                                    </template>
+                                    <!-- Languages  ends -->
+
+                                    <!-- Interests  starts -->
+                                    <template if:true={resume.interests}>
+                                        <template if:true={resume.interests.length}>
+                                            <lightning-layout-item size="12" large-device-size="6"
+                                                medium-device-size="6" small-device-size="12"
+                                                padding="horizontal-small">
+                                                <article class="slds-card lgc-bg-inverse">
+                                                    <div class="slds-card__header slds-grid">
+                                                        <header
+                                                            class="slds-media slds-media_center slds-has-flexi-truncate">
+                                                            <div class="slds-media__figure">
+                                                                <span class="slds-icon_container">
+                                                                    <lightning-icon icon-name="standard:brand"
+                                                                        title="Interests" size="small"></lightning-icon>
+                                                                </span>
+                                                            </div>
+                                                            <div class="slds-media__body">
+                                                                <h2 class="slds-card__header-title">
+                                                                    Interests
+                                                                </h2>
+                                                            </div>
+                                                        </header>
+                                                    </div>
+                                                    <div class="slds-card__body slds-card__body_inner">
+                                                        <ol class="slds-list_dotted slds-p-horizontal_small">
+                                                            <template for:each={resume.interests} for:item="interest">
+                                                                <li key={interest.name}
+                                                                    class="slds-p-vertical_xx-small">
+                                                                    <div>
+                                                                        <span
+                                                                            class="slds-p-horizontal_xx-small">{interest.name}
+                                                                        </span>
+                                                                        <template if:true={interest.keywords}>
+                                                                            <template
+                                                                                if:true={interest.keywords.length}>
+                                                                                <span class="slds-p-horizontal_small">
+                                                                                    <template
+                                                                                        for:each={interest.keywords}
+                                                                                        for:item="keyword">
+                                                                                        <lightning-badge
+                                                                                            class="slds-m-bottom_xx-small"
+                                                                                            key={keyword}
+                                                                                            label={keyword}>
+                                                                                        </lightning-badge>
+                                                                                    </template>
+                                                                                </span>
+                                                                            </template>
+                                                                        </template>
+                                                                    </div>
+                                                                </li>
+                                                            </template>
+                                                        </ol>
+                                                    </div>
+                                                </article>
+                                            </lightning-layout-item>
+                                        </template>
+                                    </template>
+                                    <!-- Interests  ends -->
+
+
+                                    <lightning-layout-item size="12" padding="horizontal-small">
+                                        <div class="slds-m-horizontal_small slds-border_top"></div>
+                                    </lightning-layout-item>
+
+                                </lightning-layout>
+                            </lightning-layout-item>
+                            <!-- Right Panel Ends -->
+                        </lightning-layout>
+                    </template>
+                </div>
+            </article>
         </lightning-layout-item>
         <!-- Resume Container ends -->
     </lightning-layout>
@@ -810,8 +1069,9 @@
         <lightning-layout-item size="12" flexibility="auto" padding="around-small">
             <footer>
                 <p class="slds-text-align_center slds-text-heading_small">Made using Lightning Web Components by <span>
-                        <lightning-formatted-url value="http://twitter.com/WaseemAliSabeel" tooltip="Twitter handle"
-                            label="Waseem Ali Sabeel" target="_blank"></lightning-formatted-url>
+                        <lightning-formatted-url value="https://github.com/WaseemAliSabeel/resume-builder-lwc"
+                            tooltip="Github Repository" label="Waseem Ali Sabeel" target="_blank">
+                        </lightning-formatted-url>
                     </span>
                 </p>
             </footer>

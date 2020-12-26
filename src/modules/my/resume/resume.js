@@ -297,6 +297,8 @@ export default class Resume extends LightningElement {
     @track error;
     COMMA_SPACE = ', ';
     QUOTATION = '"';
+    darkMode = false;
+    boolisRendered = false;
 
     get boolisResumeEmpty() {
         return this.resume && this.resume.basics ? false : true;
@@ -309,6 +311,13 @@ export default class Resume extends LightningElement {
     /***** To Toggle Visibility of the Display Picture on the Resume*****/
     togglePicture() {
         this.boolShowPicture = !this.boolShowPicture;
+    }
+
+    renderedCallback() {
+        if (!this.boolisRendered) {
+            this.checkMode();
+            this.boolisRendered = true;
+        }
     }
 
     /***** To Show the Edit Resume Modal *****/
@@ -341,6 +350,67 @@ export default class Resume extends LightningElement {
             this.closeModal();
         } catch (e) {
             this.error = 'Please Provide Correct JSON structure!  ' + e;
+        }
+    }
+
+    /***** To toggle between light mode and dark mode CSS *****/
+    toggleMode() {
+        this.darkMode = !this.darkMode;
+        this.checkMode();
+    }
+
+    /***** To check and switch Full HTML styles between Dark mode and Light mode *****/
+    checkMode() {
+        if (!this.darkMode) {
+            // Remove Dark Mode styles
+            Array.from(
+                this.template.querySelectorAll('.lgc-bg-inverse')
+            ).forEach((ele) => {
+                ele.classList.add('not-dark');
+                ele.classList.remove('lgc-bg-inverse');
+            });
+            Array.from(
+                this.template.querySelectorAll('.slds-text-color_inverse')
+            ).forEach((ele) => {
+                ele.classList.add('not-dark-text');
+                ele.classList.remove('slds-text-color_inverse');
+            });
+            Array.from(
+                this.template.querySelectorAll('.slds-text-color_inverse-weak')
+            ).forEach((ele) => {
+                ele.classList.add('weak-text');
+                ele.classList.remove('slds-text-color_inverse-weak');
+            });
+            Array.from(this.template.querySelectorAll('.utility-icon')).forEach(
+                (ele) => {
+                    ele.variant = 'base';
+                }
+            );
+        } else {
+            // Enable Dark Mode Styles
+            Array.from(this.template.querySelectorAll('.not-dark')).forEach(
+                (ele) => {
+                    ele.classList.add('lgc-bg-inverse');
+                    ele.classList.remove('not-dark');
+                }
+            );
+            Array.from(
+                this.template.querySelectorAll('.not-dark-text')
+            ).forEach((ele) => {
+                ele.classList.add('slds-text-color_inverse');
+                ele.classList.remove('not-dark-text');
+            });
+            Array.from(this.template.querySelectorAll('.weak-text')).forEach(
+                (ele) => {
+                    ele.classList.add('slds-text-color_inverse-weak');
+                    ele.classList.remove('weak-text');
+                }
+            );
+            Array.from(this.template.querySelectorAll('.utility-icon')).forEach(
+                (ele) => {
+                    ele.variant = 'inverse';
+                }
+            );
         }
     }
 }
