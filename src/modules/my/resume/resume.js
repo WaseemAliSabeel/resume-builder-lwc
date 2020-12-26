@@ -291,7 +291,7 @@ const baseJSONResume = {
 
 export default class Resume extends LightningElement {
     @track boolShowModal = false;
-    @track boolShowPicture = false;
+    @track boolShowPicture = true;
     @track resume = baseJSONResume;
     @track strResume = JSON.stringify(this.resume, null, 4);
     @track error;
