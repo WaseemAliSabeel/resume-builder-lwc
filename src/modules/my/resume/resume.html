@@ -9,11 +9,13 @@
                         <span>
                             <lightning-icon icon-name="standard:settings" title="settings"></lightning-icon>
                         </span>
-                        <span class="slds-p-horizontal_x-small">Resume Configuration
+                        <span class="slds-p-horizontal_small">Resume Configuration
                             Panel</span>
                     </div>
-                    <div class="slds-p-vertical_small">Welcome to Your Resume Builder. Edit the JSON
+                    <div class="slds-p-vertical_x-small">Welcome to Your Resume Builder. Edit the JSON
                         data to personalize this Resume as per your needs and you can print the content too.
+                        <div>Built using Lightning Web Components Open Source and hosted on Heroku.
+                        </div>
                     </div>
                 </lightning-layout-item>
                 <lightning-layout-item size="12" large-device-size="4" medium-device-size="4" small-device-size="12"
@@ -28,8 +30,6 @@
                     <lightning-button-icon icon-name="utility:light_bulb" variant="brand"
                         alternative-text="Toggle Dark Mode" title="Toggle Dark Mode" onclick={toggleMode}
                         class="slds-m-left_x-small"></lightning-button-icon>
-                    <!-- <lightning-button label="Switch template" onclick={handleTemplateSwitch}
-                        class="slds-m-left_x-small"></lightning-button> -->
                 </lightning-layout-item>
             </lightning-layout>
         </lightning-layout-item>
@@ -37,10 +37,10 @@
 
         <!-- Resume Container starts -->
         <lightning-layout-item size="12">
-            <article class="slds-card slds-p-top_x-small slds-text-color_inverse lgc-bg-inverse">
+            <article class="slds-card slds-p-top_x-small bg-not-dark">
                 <div class="slds-card__body slds-card__body_inner">
                     <template if:true={resume}>
-                        <lightning-layout multiple-rows class="slds-text-color_inverse lgc-bg-inverse">
+                        <lightning-layout multiple-rows class="regular-text bg-not-dark">
 
                             <!-- Error panel for Blank / Incorrect Resume starts-->
                             <template if:true={boolisResumeEmpty}>
@@ -58,7 +58,7 @@
                                 small-device-size="12" class="slds-hyphenate">
                                 <template if:true={resume.basics}>
 
-                                     <!-- Conditional Display of User Image -->
+                                    <!-- Conditional Display of User Image -->
                                     <template if:true={boolShowPicture}>
                                         <template if:true={resume.basics.picture}>
                                             <img class="slds-align_absolute-center" src={resume.basics.picture}
@@ -184,21 +184,19 @@
                                                     Online Profiles
                                                 </lightning-layout-item>
 
+                                                <!-- Empty placeholder for Icon space -->
                                                 <lightning-layout-item size="2" large-device-size="2"
                                                     medium-device-size="2" small-device-size="1" padding="around-small">
                                                 </lightning-layout-item>
-
 
                                                 <lightning-layout-item size="10" large-device-size="10"
                                                     medium-device-size="10" small-device-size="11">
                                                     <lightning-layout multiple-rows>
                                                         <template for:each={resume.basics.profiles} for:item="profile">
-
                                                             <!-- Each Profile Info -->
                                                             <template if:true={profile.url}>
                                                                 <lightning-layout-item key={profile.url} size="6"
-                                                                    large-device-size="6" medium-device-size="6"
-                                                                    small-device-size="6" padding="around-small">
+                                                                    padding="around-small">
                                                                     <lightning-formatted-url value={profile.url}
                                                                         tooltip={profile.username}
                                                                         label={profile.network} target="_blank">
@@ -216,7 +214,6 @@
                             </lightning-layout-item>
                             <!-- Left Panel Ends -->
 
-
                             <!-- Right Panel Starts -->
                             <lightning-layout-item size="12" large-device-size="9" medium-device-size="8"
                                 small-device-size="12" class="slds-border_left">
@@ -226,7 +223,7 @@
                                     <template if:true={resume.basics}>
                                         <template if:true={resume.basics.summary}>
                                             <lightning-layout-item size="12" padding="horizontal-small">
-                                                <article class="slds-card lgc-bg-inverse">
+                                                <article class="slds-card bg-not-dark">
                                                     <div class="slds-card__header slds-grid">
                                                         <header
                                                             class="slds-media slds-media_center slds-has-flexi-truncate">
@@ -254,12 +251,10 @@
                                     </template>
                                     <!-- Professional Summary ends -->
 
-
-
                                     <!-- Work Experience starts -->
                                     <template if:true={resume.work}>
                                         <lightning-layout-item size="12" padding="horizontal-small">
-                                            <article class="slds-card lgc-bg-inverse">
+                                            <article class="slds-card bg-not-dark">
                                                 <div class="slds-card__header slds-grid">
                                                     <header
                                                         class="slds-media slds-media_center slds-has-flexi-truncate">
@@ -368,7 +363,7 @@
                                     <template if:true={resume.projects}>
                                         <template if:true={resume.projects.length}>
                                             <lightning-layout-item size="12" padding="horizontal-small">
-                                                <article class="slds-card lgc-bg-inverse">
+                                                <article class="slds-card bg-not-dark">
                                                     <div class="slds-card__header slds-grid">
                                                         <header
                                                             class="slds-media slds-media_center slds-has-flexi-truncate">
@@ -453,12 +448,11 @@
                                     </template>
                                     <!-- Projects  ends -->
 
-
                                     <!-- Skills  starts -->
                                     <template if:true={resume.skills}>
                                         <template if:true={resume.skills.length}>
                                             <lightning-layout-item size="12" padding="horizontal-small">
-                                                <article class="slds-card lgc-bg-inverse">
+                                                <article class="slds-card bg-not-dark">
                                                     <div class="slds-card__header slds-grid">
                                                         <header
                                                             class="slds-media slds-media_center slds-has-flexi-truncate">
@@ -514,7 +508,7 @@
                                     <template if:true={resume.certifications}>
                                         <template if:true={resume.certifications.length}>
                                             <lightning-layout-item size="12" padding="horizontal-small">
-                                                <article class="slds-card lgc-bg-inverse">
+                                                <article class="slds-card bg-not-dark">
                                                     <div class="slds-card__header slds-grid">
                                                         <header
                                                             class="slds-media slds-media_center slds-has-flexi-truncate">
@@ -565,7 +559,7 @@
                                         <template if:true={resume.education.length}>
                                             <lightning-layout-item size="12" padding="horizontal-small">
 
-                                                <article class="slds-card lgc-bg-inverse">
+                                                <article class="slds-card bg-not-dark">
                                                     <div class="slds-card__header slds-grid">
                                                         <header
                                                             class="slds-media slds-media_center slds-has-flexi-truncate">
@@ -625,12 +619,11 @@
                                     </template>
                                     <!-- Education  ends -->
 
-
                                     <!-- References  starts -->
                                     <template if:true={resume.references}>
                                         <template if:true={resume.references.length}>
                                             <lightning-layout-item size="12" padding="horizontal-small">
-                                                <article class="slds-card lgc-bg-inverse">
+                                                <article class="slds-card bg-not-dark">
                                                     <div class="slds-card__header slds-grid">
                                                         <header
                                                             class="slds-media slds-media_center slds-has-flexi-truncate">
@@ -674,7 +667,7 @@
                                     <template if:true={resume.publications}>
                                         <template if:true={resume.publications.length}>
                                             <lightning-layout-item size="12" padding="horizontal-small">
-                                                <article class="slds-card lgc-bg-inverse">
+                                                <article class="slds-card bg-not-dark">
                                                     <div class="slds-card__header slds-grid">
                                                         <header
                                                             class="slds-media slds-media_center slds-has-flexi-truncate">
@@ -743,7 +736,7 @@
                                     <template if:true={resume.volunteer}>
                                         <template if:true={resume.volunteer.length}>
                                             <lightning-layout-item size="12" padding="horizontal-small">
-                                                <article class="slds-card lgc-bg-inverse">
+                                                <article class="slds-card bg-not-dark">
                                                     <div class="slds-card__header slds-grid">
                                                         <header
                                                             class="slds-media slds-media_center slds-has-flexi-truncate">
@@ -835,7 +828,7 @@
                                         <template if:true={resume.awards.length}>
                                             <lightning-layout-item size="12" padding="horizontal-small">
 
-                                                <article class="slds-card lgc-bg-inverse">
+                                                <article class="slds-card bg-not-dark">
                                                     <div class="slds-card__header slds-grid">
                                                         <header
                                                             class="slds-media slds-media_center slds-has-flexi-truncate">
@@ -897,7 +890,7 @@
                                                 medium-device-size="6" small-device-size="12"
                                                 padding="horizontal-small">
 
-                                                <article class="slds-card lgc-bg-inverse">
+                                                <article class="slds-card bg-not-dark">
                                                     <div class="slds-card__header slds-grid">
                                                         <header
                                                             class="slds-media slds-media_center slds-has-flexi-truncate">
@@ -940,7 +933,7 @@
                                             <lightning-layout-item size="12" large-device-size="6"
                                                 medium-device-size="6" small-device-size="12"
                                                 padding="horizontal-small">
-                                                <article class="slds-card lgc-bg-inverse">
+                                                <article class="slds-card bg-not-dark">
                                                     <div class="slds-card__header slds-grid">
                                                         <header
                                                             class="slds-media slds-media_center slds-has-flexi-truncate">
@@ -1033,23 +1026,32 @@
                     <div class="slds-text-title_bold">Do not modify the Keys in this JSON. If you
                         do not need a particular section / content, either remove it or make its value = "" or [] , as
                         appropriate in below JSON format</div>
-
                     <template if:true={error}>
-                        <div class="slds-text-color_destructive">{error}</div>
+                        <div class="slds-text-color_destructive slds-p-around_x-small">{error}</div>
+                        <div class="slds-text-color_success slds-p-around_x-small">You may use any online JSON
+                            validators (like <span>
+                                <lightning-formatted-url value="https://jsonlint.com/" tooltip="JSON Lint"
+                                    label="this one" target="_blank">
+                                </lightning-formatted-url>
+                            </span>) to resolve your errors</div>
                     </template>
-
                     <textarea onchange={handleJSONchange} class="slds-textarea" rows="50"
                         cols="50">{strResume}</textarea>
-
                 </div>
                 <!-- Modal/Popup Box LWC footer starts here -->
                 <footer class="slds-modal__footer">
-                    <lightning-button variant="neutral" label="Cancel" title="Cancel" onclick={closeModal}
-                        class="slds-m-left_x-small"></lightning-button>
+                    <lightning-button variant="neutral" label="Close" title="Close" onclick={closeModal}
+                        class="slds-m-left_x-small slds-m-bottom_x-small"></lightning-button>
                     <lightning-button variant="destructive-text" label="Reset" title="Reset" icon-name="utility:refresh"
-                        onclick={resetJSON} class="slds-m-left_x-small"></lightning-button>
+                        onclick={resetJSON} class="slds-m-left_x-small slds-m-bottom_x-small"></lightning-button>
+                    <template if:true={error}>
+                        <lightning-button variant="neutral" label="Revert" title="Revert" icon-name="utility:undo"
+                            onclick={revertJSON} class="slds-m-left_x-small slds-m-bottom_x-small">
+                        </lightning-button>
+                    </template>
                     <lightning-button variant="brand" label="Update" title="Update" onclick={handleUpdateJSON}
-                        class="slds-m-left_x-small"></lightning-button>
+                        class="slds-m-left_x-small slds-m-bottom_x-small"></lightning-button>
+
                 </footer>
             </div>
         </section>

@@ -1,12 +1,13 @@
 import { LightningElement, track } from 'lwc';
 
-// Static Example Template for JSON Resume
+// Static Example Template for JSON Resume initial load
 const baseJSONResume = {
     basics: {
         name: 'Waseem Ali Sabeel',
         label: 'Salesforce Specialist',
         picture: '/resources/WaseemAliSabeel.png',
-        pictureComment: 'The file path is for the picture stored in Github only. Third party URLs will be blocked',
+        pictureComment:
+            'The image path is from current hosted github repository. Third party URLs are blocked by CSP',
         email: 'wsabeel@gmail.com',
         phone: '(123) 456-7890',
         website: 'https://sfwiseguys.wordpress.com',
@@ -238,16 +239,16 @@ const baseJSONResume = {
     ],
     volunteer: [
         {
-            organization: 'Organization',
+            organization: 'Universal School for kids',
             position: 'Volunteer',
             website: 'https://salesforce.com/',
-            startDate: '2016-01-01',
-            endDate: '2016-05-01',
+            startDate: '2018-01-01',
+            endDate: '2018-05-01',
             summary: 'Description of Volunteering activities',
             highlights: ["Awarded 'Volunteer of the Month'"]
         },
         {
-            organization: 'Some Organization 2',
+            organization: 'Universal Village',
             position: 'Lead Volunteer',
             website: 'https://salesforce.com/',
             startDate: '2017-11-01',
@@ -259,7 +260,7 @@ const baseJSONResume = {
     awards: [
         {
             title: 'Excellence Award',
-            date: '2018-12-01',
+            date: '2020-12-01',
             awarder: 'Universal Containers',
             summary: 'Awarded for exemplary performance at work'
         },
@@ -273,18 +274,18 @@ const baseJSONResume = {
     ],
     publications: [
         {
-            name: 'Dreamforce 2018 Guest Speaker',
-            publisher: 'Salesforce Dreamforce',
-            releaseDate: '2018-10-01',
+            name: 'Dreamforce 2020 Guest Speaker',
+            publisher: 'Dreamforce 2020',
+            releaseDate: '2020-12-01',
             website: 'http://salesforce.com',
-            summary: 'Description of the Presentation / Conference / Paper...'
+            summary: 'Description of the Presentation / Conference'
         },
         {
-            name: 'Publication Name',
-            publisher: 'Company Name',
-            releaseDate: '2014-10-01',
+            name: 'White Paper on LWC',
+            publisher: 'Salesforce',
+            releaseDate: '2019-10-01',
             website: 'http://salesforce.com',
-            summary: 'Description ...'
+            summary: 'Description of the item'
         }
     ]
 };
@@ -294,12 +295,14 @@ export default class Resume extends LightningElement {
     @track boolShowPicture = true;
     @track resume = baseJSONResume;
     @track strResume = JSON.stringify(this.resume, null, 4);
+    @track backupResume = baseJSONResume;
     @track error;
     COMMA_SPACE = ', ';
     QUOTATION = '"';
     darkMode = false;
     boolisRendered = false;
 
+    /***** Getter Method to render error if Bad Resume JSON *****/
     get boolisResumeEmpty() {
         return this.resume && this.resume.basics ? false : true;
     }
@@ -329,12 +332,20 @@ export default class Resume extends LightningElement {
     /***** To Close the Edit Resume Modal *****/
     closeModal() {
         this.boolShowModal = false;
+        this.error = '';
+        this.checkMode();
     }
 
     /***** To Reset the Resume JSON back to the original Static Template *****/
     resetJSON() {
         this.resume = baseJSONResume;
         this.strResume = JSON.stringify(this.resume, null, 4);
+        this.closeModal();
+    }
+    /***** To Revert the Resume JSON back to previously saved content, in case of error *****/
+    revertJSON() {
+        this.strResume = JSON.stringify(this.backupResume, null, 4);
+        this.closeModal();
     }
 
     /***** To store the user entered modifications as stringified JSON *****/
@@ -347,9 +358,10 @@ export default class Resume extends LightningElement {
         try {
             this.error = '';
             this.resume = JSON.parse(this.strResume);
+            this.backupResume = JSON.parse(this.strResume);
             this.closeModal();
         } catch (e) {
-            this.error = 'Please Provide Correct JSON structure!  ' + e;
+            this.error = 'Please Provide valid JSON structure.  ' + e;
         }
     }
 
@@ -363,16 +375,16 @@ export default class Resume extends LightningElement {
     checkMode() {
         if (!this.darkMode) {
             // Remove Dark Mode styles
-            Array.from(
-                this.template.querySelectorAll('.lgc-bg-inverse')
-            ).forEach((ele) => {
-                ele.classList.add('not-dark');
-                ele.classList.remove('lgc-bg-inverse');
-            });
+            Array.from(this.template.querySelectorAll('.bg-inverse')).forEach(
+                (ele) => {
+                    ele.classList.add('bg-not-dark');
+                    ele.classList.remove('bg-inverse');
+                }
+            );
             Array.from(
                 this.template.querySelectorAll('.slds-text-color_inverse')
             ).forEach((ele) => {
-                ele.classList.add('not-dark-text');
+                ele.classList.add('regular-text');
                 ele.classList.remove('slds-text-color_inverse');
             });
             Array.from(
@@ -388,18 +400,18 @@ export default class Resume extends LightningElement {
             );
         } else {
             // Enable Dark Mode Styles
-            Array.from(this.template.querySelectorAll('.not-dark')).forEach(
+            Array.from(this.template.querySelectorAll('.bg-not-dark')).forEach(
                 (ele) => {
-                    ele.classList.add('lgc-bg-inverse');
-                    ele.classList.remove('not-dark');
+                    ele.classList.add('bg-inverse');
+                    ele.classList.remove('bg-not-dark');
                 }
             );
-            Array.from(
-                this.template.querySelectorAll('.not-dark-text')
-            ).forEach((ele) => {
-                ele.classList.add('slds-text-color_inverse');
-                ele.classList.remove('not-dark-text');
-            });
+            Array.from(this.template.querySelectorAll('.regular-text')).forEach(
+                (ele) => {
+                    ele.classList.add('slds-text-color_inverse');
+                    ele.classList.remove('regular-text');
+                }
+            );
             Array.from(this.template.querySelectorAll('.weak-text')).forEach(
                 (ele) => {
                     ele.classList.add('slds-text-color_inverse-weak');

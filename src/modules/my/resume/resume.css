@@ -2,13 +2,13 @@ img {
     border-radius: 50%;
 }
 
-.lgc-bg-inverse {
+.bg-inverse {
     background-color: #0d1117;
     transition-property: background-color;
     transition-duration: 0.7s;
 }
 
-.not-dark {
+.bg-not-dark {
     background-color: #fff;
     transition-property: background-color;
     transition-duration: 0.7s;
