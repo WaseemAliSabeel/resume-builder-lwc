@@ -1,7 +1,7 @@
 {
     "name": "resume-builder",
     "description": "Waseem's LWC OSS Resume Builder App",
-    "version": "0.0.1",
+    "version": "1.0.0",
     "author": "Waseem Ali Sabeel",
     "bugs": "https://github.com/WaseemAliSabeel/resume-builder-lwc/issues",
     "dependencies": {
@@ -19,9 +19,9 @@
         "prettier": "^2.2.1"
     },
     "engines": {
-        "node": ">=10.13.0",
-        "npm": ">=6.4.1",
-        "yarn": ">=1.9.4"
+        "node": "16.x",
+        "npm": "6.x",
+        "yarn": "1.x"
     },
     "homepage": "https://github.com/WaseemAliSabeel/resume-builder-lwc",
     "husky": {
